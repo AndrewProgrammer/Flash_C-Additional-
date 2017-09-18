@@ -1,0 +1,69 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <cstdio>
+#include <iostream>
+
+using namespace std;
+
+
+
+void main()
+{
+	//char filename[80];
+	//cout << "Enter file name: ";
+	//cin.getline(filename, 79);
+	FILE * myFile = fopen("C://test/1.txt", "r");
+	if (myFile)
+	{
+		cout << "File open success" << endl;
+		char buf[100];
+		while (fgets(buf, 100, myFile))
+		{
+			cout << buf;
+		}
+		fclose(myFile);
+	}
+	else
+	{
+		cout << "Cannot open file" << endl;
+	}
+
+
+	char *text[]{ "Hello how are yoput" };
+	FILE *myFile2 = fopen("C://test/text.txt", "a+");
+
+	if (!myFile2)
+	{
+		cout << "Error" << endl;
+		system("pause");
+		exit(0);
+	}
+
+	int size = sizeof(text) / sizeof(char*);
+	for (size_t i = 0; i < size; i++)
+	{
+		if (fputs(text[i], myFile2) < 0)
+		{
+			cout << "Error writing" << endl;
+		}
+	}
+
+
+
+	system("pause");
+}
+/*
+		Режимы открытия файла :
+		r - только чтение.Запись запрещена.Файл должен существовать.
+		w - только запись.Чтение запрещено.Создает пустой файл.Если файл с таким именем существует,
+		то fopen его очистит до нулевой длины. (Всё содержимое файла будет потеряно, и он будет пуст)
+		a - запись в конец файла.Если файла не существует, он будет создан.Если файл существует, fopen откроет его
+		и ничего очищать не будет.Последующая запись будет дописана в конец файла.
+
+
+		r + -открытие для чтения и записи.Файл должен существовать.Чтение начинается с начала файла.
+		w + -открытие для чтения и записи.Создает пустой файл.Если файл с таким именем существует,
+		то fopen его очистит до нулевой длины. (Всё содержимое файла будет потеряно, и он будет пуст)
+		a + -открытие для чтения и записи.Если файла не существует, он будет создан.Если файл существует, fopen откроет его
+		и ничего очищать не будет.Последующая запись будет дописана в конец файла.
+		*/

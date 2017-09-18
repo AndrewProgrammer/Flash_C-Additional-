@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+enum MONTH{
+	JANUARY=1,
+	FEBRUARY,
+	MARCH,
+	APRIL,
+	MAY,
+	JUNE,
+	JULY,
+	AUGUST,
+	SEPTEMBER,
+	OCTOBER,
+	NOVEMBER,
+	DECEMBER
+};
+void main()
+{
+	int day, month, year;
+	cin >> day >> month >> year;
+	day++;
+	if (day == 32 && (month == JANUARY || month == MARCH || month == MAY || month == JULY || month == AUGUST || month == OCTOBER || month == DECEMBER) ||
+		day == 31 && (month == APRIL || month == JUNE || month == SEPTEMBER || month == NOVEMBER) ||
+		day == 30 && month == FEBRUARY && (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) ||
+		day == 29 && month == FEBRUARY && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0))
+	{
+		day = 1;
+		month++;
+	}
+	if (month == 13)
+	{
+		month = 1;
+		year++;
+	}
+	cout <<"Next day is: "<< day << '.' << month << '.' << year << endl;
+}

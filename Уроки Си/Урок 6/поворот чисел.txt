@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int a = 475;
+	int d1, d2,d3,d4;
+	d1 = a / 100;  (4)
+	d2 = a % 100;   (75)
+	d3 = d2/10;    (7)
+	d4 = d2 % 10;   (5)
+	a = d4 * 100 + d3*10 + d1;
+	cout << a << endl;
+}
+Ответ:574

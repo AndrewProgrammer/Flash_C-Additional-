@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int dost, kol, sum = 0;
+	cin >> dost;
+	cin >> kol;
+	sum = dost * kol;
+	cin >> dost >> kol;
+	sum = dost * kol + sum;
+	cin >> dost >> kol;
+	sum = sum + dost* kol;
+	cout << sum;
+}

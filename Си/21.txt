@@ -1,0 +1,68 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+using namespace std;
+//Одномерные статические массивы
+void main()
+{
+	const int size=52;
+	srand((int)time(0));
+	int a[size], compcards=0, comppoints=0,playercards=0, playerpoints=0,c;
+	for(int i=0; i<size; ++i)
+		a[i]=i;
+	for(int i=0; i<size; ++i)
+		swap(a[i],a[rand()%size]);
+
+	while(comppoints<15)
+	{
+		switch(a[compcards]/4+2)
+		{
+		case 11: comppoints+=2; break;
+		case 12: comppoints+=3; break;
+		case 13: comppoints+=4;; break;
+		case 14: comppoints+=11;; break;
+		default: comppoints+=a[compcards]/4+2;
+		}
+		++compcards;
+	}
+	cout<<"Take card or press Esc to stop.\n";
+	playercards=compcards;
+	do{
+		switch(a[playercards]/4+2)
+		{
+		case 11: cout<<'J'; playerpoints+=2; break;
+		case 12: cout<<'Q'; playerpoints+=3; break;
+		case 13: cout<<'K'; playerpoints+=4;; break;
+		case 14: cout<<'A';playerpoints+=11;; break;
+		default:
+			cout<<a[playercards]/4+2;
+			playerpoints+=a[playercards]/4+2;
+		}
+		cout<<char(a[playercards]%4+3)<<' ';
+		++playercards;
+		c=_getch();
+	}while(c!=27&&playerpoints<=21);
+	cout<<endl;
+	for(int i=0; i<compcards; ++i)
+	{
+		switch(a[i]/4+2)
+		{
+		case 11: cout<<'J'; break;
+		case 12: cout<<'Q'; break;
+		case 13: cout<<'K'; break;
+		case 14: cout<<'A'; break;
+		default: cout<<a[i]/4+2;
+		}
+		cout<<char(a[i]%4+3)<<' ';
+	}
+	if(playerpoints==comppoints||playerpoints>21&&comppoints>21)
+		cout<<"\nNo winner!";
+	else if((playerpoints>21||playerpoints<comppoints)&&comppoints<=21)
+		cout<<"\nComputer wins!";
+	else
+		cout<<"\nPlayer wins!";
+
+	
+}
+

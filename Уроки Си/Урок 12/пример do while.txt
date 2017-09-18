@@ -1,0 +1,12 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int a;
+	do
+	{
+		cout << "Enter a between 1 and 4:";
+		cin >> a;
+	} while (a > 4 || a < 1);
+	cout << a << endl;
+}

@@ -1,0 +1,12 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	double d;
+	cout << "Vedite chislo drobnoe\n";
+	cin >> d;
+	d *= 100;
+	if (d - floor(d) >= 0.5) d++;(Функция floor округляет не вверх а вниз)
+	d = floor(d) / 100.0;(Функция floor округляет не вверх а вниз)
+	cout << d << "Vashe chislo okryglenoe do sotix\n" << endl;
+}

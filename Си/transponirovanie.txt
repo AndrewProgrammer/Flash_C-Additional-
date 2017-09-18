@@ -1,0 +1,41 @@
+#include <Windows.h>
+#include <iostream>
+#include <ctime>
+#include <conio.h>
+using namespace std;
+//Многомерные статические массивы
+
+void main()
+{
+	int a[5][5]={0},c, temp;
+	for(int i=0; i<5; ++i)
+	{
+		for(int j=0; j<5; ++j)
+		{
+			a[i][j]=rand()%10;
+			cout<<a[i][j]<<'\t';
+		}
+		cout<<endl;
+	}
+	for(int i=0; i<5; ++i)
+	{
+		for(int j=0; j<5; ++j)
+		{
+			//if(i<j)
+				swap(a[i][j], a[j][i]);
+		}
+		cout<<endl;
+	}
+	for(int i=0; i<5; ++i)
+	{
+		for(int j=0; j<5; ++j)
+		{
+			cout<<a[i][j]<<'\t';
+		}
+		cout<<endl;
+	}
+	
+
+	
+}
+	

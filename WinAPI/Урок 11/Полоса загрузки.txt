@@ -1,0 +1,50 @@
+Расширенные элементы управления:
+1)Progress bar - полоса загрузки
+2)Slider ползунок
+3)Spin переключатель
+4)Статусноя строка, например координаты.
+#include <CommCtrl.h> // Библиотека для расширенных элементов управления.
+#pragma comment(lib, "comctl32") // Подключения dll 
+*.lib // нужен для линковщика, сравнивает lib файл с вашим проектом
+PBM_SETRANGE - устанавливает диапозон
+MAKELPARAM(0,60) - собирает диапазон.
+PBM_SETSTEP - устанавливает шаг, интервал
+PBM_STEPIT - изменение шага.
+PBM_SETPOS - установка текущего прогресса.
+PBM_SETBKCOLOR - установка фона индикатора, static_cast<LPARAM>(RGB(0, 0, 255))) - устанавливаем цвет
+PBM_SETBARCOLOR - цвет для нашего индикатора.
+OnCommand - нажатие на кнопку, и срабатывает таймер
+-----------------------------------------------------
+Slider
+TBM_GETPOS - изменение слайдера
+TB_THUMBPOSITION - приходит когда отпустили слайдер
+TB_THYMBTRACK - постоянный приход смещения слайдера
+----------------------------------------------------
+Spin Control - работает отдельно с edit
+UDACCEL - тип данных ускорения (Структура), 1 - количевство пройденных секунд пока пользователь жмет кнопу, 2 - сколько прибавлять
+UDM_SETACCEl - установка нашего spina
+UDM_SPIN_BUDDY - привязка EDIT -  SendMessage(g_spin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(g_spinBuddy), 0U);
+UDM_GETPOS32 - получаем позицию.
+ZeroMemory(textCopy, ARRAYSIZE(g_text)); - обнуление памяти
+------------------------------------------------------
+Status Bar
+CCS_BOTTOM - будет внизу экрана
+SBARS_TOOLTIPS - будет показано текст что нужно делать, подсказки
+SBARS_SIZEGRIP - показывает точки которые можем менять окно
+WM_USER - начало свободного диапозона констант
+SB_SETPARTS - деление статус бара настраивает
+SB_SETTEXT - ставим текст 
+SB_SETTIPTEXT - подсказка
+Алгоритм загрузки иконки из ресурсов, если же мы хотим из какого то пути то передаем в GetModuleHandle(ПУТЬ!): 
+ HICON icon = LoadIcon(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDI_CARTMAN));
+
+    // Установка иконки в первую секцию строки состояния.
+    SendMessage(g_status, SB_SETICON, 0U, reinterpret_cast<LPARAM>(icon));
+
+    // Установка цвета фона строки состояния.
+    SendMessage(g_status, SB_SETBKCOLOR, 0U, static_cast<LPARAM>(RGB(255, 200, 255)));
+Обьяснение:
+HICON - тип данных icon 
+MAKEINTRESOURCE(IDI_CARTMAN) - ID иконки
+SB_SETICON - ставим нашу иконку
+WM_SIZE - при изменении окна

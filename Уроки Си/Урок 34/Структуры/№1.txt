@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+struct coordinates
+{
+	int x, x1, y, y1;
+};
+void main()
+{
+	coordinates cord;
+	cout << "Enter 1 point\n";
+	cin >> cord.x >> cord.y;
+	cout << "Enter 2 point\n";
+	cin >> cord.x1 >> cord.y1;
+	if ((cord.x != cord.x1 && cord.y != cord.y1) || (cord.x == cord.x1 && cord.y == cord.y1))
+	{
+		cout << "Line maked!";
+	}
+	else
+	{
+		if (cord.x == cord.x1)
+		{
+			cout << "Line is paralel to Y\n";
+		}
+		else cout << "Line is paralel to X\n";
+	}
+}

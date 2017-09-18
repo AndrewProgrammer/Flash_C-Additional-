@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+template<typename T1, typename T2>
+auto Print(T1 a, T2 b) -> decltype(a + b)
+{
+
+}
+template<typename T>
+void myswap(T &a, T &b)
+{
+	T temp = a;
+	a = b;
+	b = temp;
+}
+template < typename T > 
+void Sort(T arr, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = size - 1; j > i; j--)
+		{
+			if (arr[i] > arr[j])
+				myswap(arr[i], arr[j]);
+		}
+	}
+}
+template<typename T, typename T2>
+auto Find(T arr, T2 element, int size) -> decltype(arr)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] == element)
+		{
+			return (arr + i);
+		}
+	}
+	return EXIT_SUCCESS;
+}
+void main()
+{
+	setlocale(0, "ru");
+	int a[4] = { 3, 1, 7, -2 };
+	Sort(a, 4);
+	for (int i = 0; i < 4; i++)
+	{
+		cout << a[i] << endl;
+	}
+	int *p1 = Find(a, -2, 4);
+	cout << endl;
+	cout << "Искомый элемент: " << *p1 << endl;
+	system("pause");
+}

@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	double d;
+	cout << "Vedite chislo drobnoe\n";
+	cin >> d;
+	d *= 100;
+	if (d - ceil(d) >= 0.5) d++;(Функция ceil возвращает значение double, представляющее на- 
+именьшее целое, которое больше или равно x)
+	d = ceil(d) / 100.0;(Функция ceil возвращает double результат. Возвращаемого
+значения в случае ошибки нет)
+	cout << d << "Vashe chislo okryglenoe do sotix\n" << endl;
+}

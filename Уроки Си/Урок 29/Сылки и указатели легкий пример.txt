@@ -1,0 +1,11 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+void main()
+{
+	int x = 35;//int a = 70;
+	int&b = x;//int *ptr=&a;
+	b++;//int&a2=a;
+	cout << b << " " << x << endl;//int c=*ptr;
+	system("pause");
+}

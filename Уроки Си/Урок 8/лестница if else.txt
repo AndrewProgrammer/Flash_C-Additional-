@@ -1,0 +1,21 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	int choice;
+	cout << "Vedite choice 1 or 2 or 3\n";
+	cin >> choice;
+	if (choice == 1)
+	{
+		cout << 1 << endl;
+	}
+	else if (choice == 2)
+	{
+		cout << 2 << endl;
+	}
+	else if (choice == 3)
+	{
+		cout << 3 << endl;
+	}
+	else cout << "wrong!\n";
+}

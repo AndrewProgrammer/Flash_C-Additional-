@@ -1,0 +1,10 @@
+При нажатии на кнопку главному диалогу посылается WM_COMMAND (LOWORD(wParam)) - ID Button
+EnableWindow() - включает или отключает элемент - enabled , disabled. // Если что то нельзя сделать это действие должно быть отключено.
+WM_COMMAND - в lParam хранится HWND
+GetDlgItem - позволяет получить во время работы приложения дескриптор. (дескриптор кнопки старт, дескриптор кнопки стоп).
+WM_INITDIALOG - приходит перед первым показом.//Можно инициализировать наше окно, и там использовать GetDlgItem
+#pragma cooment(linker, "\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"") // Позволяет запустить приложение под такой же темой на Windows
+GetCursorPos() // получаем точку(x,y) - где находится курсор от экранной системы
+ScreenToClient() // конвертирует screen точку в нашу клиентскую
+ClientToScreen() // наоборот из Clinet относительно экрана
+

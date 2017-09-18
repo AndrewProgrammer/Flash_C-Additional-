@@ -1,0 +1,367 @@
+#include <iostream>
+#include <conio.h>
+#include <Windows.h>
+using namespace std;
+enum LAND{
+	BLANK = ' ',
+	WALL = 219,
+	PORTAL1 = ' ',
+	PORTAL2 = ' ',
+	PORTAL3 = ' ',
+	PORTAL4 = ' ',
+	PORTAL5 = ' ',
+	PORTAL6 = ' ',
+	PORTAL7 = ' ',
+	PORTAL8 = ' ',
+	PORTAL9 = ' ',
+	PORTAL10 = ' ',
+	LAVA = 176,
+	WATER = 177,
+	SAND = 178,
+	ACID = 182,
+	ACID1 = 205,
+	ACID2 = 186,
+	ACID3 = 201,
+	ACID4 = 187,
+	ACID5 = 191,
+	ACID6 = 192,
+	ACID7 = 188,
+	ACID8 = 200,
+	KR = 253,
+	UP = 179,
+	WAY = 207,
+	GRID = 35,
+	GRID1 = 120,
+	LINE = 196,
+	MONEY = 46,
+	HP = 3
+};
+enum LAND_COLOR{
+	BLANKc,
+	SMILEc = 15,
+	WALLc = 15,
+	LAVAc = 12,
+	WATERc = 11,
+	SANDc = 14,
+	ACIDc = 10,
+	ACID1c = 15,
+	ACID2c = 15,
+	ACID3c = 15,
+	ACID4c = 15,
+	ACID5c = 15,
+	ACID6c = 15,
+	ACID7c = 15,
+	ACID8c = 15,
+	UPc = 15,
+	WAYc = 15,
+	GRIDc = 10,
+	GRID1c = 14,
+	LINEc = 13,
+	MONEYc = 7,
+	HPc = 13
+};
+int labirint[14][76] = {
+	{ WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, PORTAL5, PORTAL7, PORTAL9, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL },//1
+	{ WALL, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID2, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID, HP, HP, HP, ACID, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, WALL },//2
+	{ WALL, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, MONEY, MONEY, MONEY, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID, ACID1, ACID1, ACID1, ACID, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, WALL },//3
+	{ WALL, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID2, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID2, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, WALL },//4
+	{ WALL, LAVA, LAVA, LAVA, LAVA, LAVA, LAVA, MONEY, MONEY, MONEY, ACID8, ACID1, ACID1, MONEY, MONEY, ACID1, ACID1, WAY, ACID1, ACID1, MONEY, MONEY, ACID1, ACID1, ACID7, MONEY, MONEY, MONEY, MONEY, MONEY, GRID, GRID, GRID, GRID, ACID1, ACID1, ACID1, GRID, GRID, GRID, GRID, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, WATER, WATER, WATER, WATER, WATER, WATER, WALL },//5
+	{ WALL, HP, HP, HP, HP, HP, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, HP, HP, HP, HP, HP, HP, HP, HP, HP, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, HP, HP, HP, HP, HP, WALL },//6
+	{ PORTAL2, HP, HP, HP, HP, HP, UP, MONEY, MONEY, MONEY, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, MONEY, MONEY, MONEY, MONEY, MONEY, GRID, HP, HP, HP, HP, HP, HP, HP, HP, HP, GRID, MONEY, MONEY, MONEY, MONEY, MONEY, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, HP, HP, HP, HP, HP, PORTAL1 },//7 - половина
+	{ PORTAL4, HP, HP, HP, HP, HP, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, GRID1, HP, HP, HP, HP, HP, HP, HP, HP, HP, GRID1, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, HP, HP, HP, HP, HP, PORTAL3 },//8
+	{ WALL, HP, HP, HP, HP, HP, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, GRID1, HP, HP, HP, HP, HP, HP, HP, HP, HP, GRID1, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, HP, HP, HP, HP, HP, WALL },//9
+	{ WALL, LAVA, LAVA, LAVA, LAVA, LAVA, LAVA, MONEY, MONEY, MONEY, MONEY, ACID3, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID4, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, GRID1, GRID1, GRID1, GRID1, ACID1, GRID1, ACID1, GRID1, GRID1, GRID1, GRID1, MONEY, MONEY, MONEY, MONEY, MONEY, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, WATER, WATER, WATER, WATER, WATER, WATER, WALL },//10
+	{ WALL, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID2, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID8, ACID1, ACID1, ACID1, ACID1, ACID4, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, WALL },//11
+	{ WALL, ACID1, ACID1, ACID4, MONEY, MONEY, MONEY, MONEY, MONEY, ACID1, ACID1, ACID7, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID2, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, SAND, ACID1, ACID1, ACID1, SAND, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, UP, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID3, ACID1, ACID1, WALL },//12
+	{ WALL, HP, BLANK, ACID2, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID2, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, SAND, HP, HP, HP, SAND, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, MONEY, ACID2, BLANK, HP, WALL },//13
+	{ WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, PORTAL6, PORTAL8, PORTAL10, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL },//14
+};
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_CURSOR_INFO cci = { sizeof(cci), false };//создаем объект, содержащий настройки дл€ хендла с указанием не отображать курсор
+COORD smilePosition = { 35, 10 };
+int prevPx = BLANK;
+int sleep_time = 150;
+int cost = 568;
+char smile = 123, smile1 = 2, smile2 = 1, smile3 = 56;
+int money = 0;
+int hp = 100;
+int finalscore = 0;
+char hp1 = 3;
+int dx = 0, dy = 0;
+int menu;
+bool isGameActive = false;
+bool isGameActive1 = false;
+bool flag = true;
+bool flag1 = false;
+bool isProgramActive = true;
+void printChar(char character)
+{
+	SetConsoleCursorPosition(h, smilePosition);
+	cout << character;
+}
+void printPanel()
+{
+	COORD position = { 0, 15 };
+	SetConsoleCursorPosition(h, position);
+	for (int i = 0; i < 10; i++)
+	{
+		cout << " ";
+	}
+	SetConsoleTextAttribute(h, 12);
+	SetConsoleCursorPosition(h, position);
+	cout << "HP:" << hp1 << hp << endl;
+	SetConsoleTextAttribute(h, 14);
+	cout << "Money: " << money << endl;
+	SetConsoleTextAttribute(h, 12);
+}
+void  Labirint()
+{
+	for (int y = 0; y < 14; y++)
+	{
+		for (int x = 0; x < 76; x++)
+		{
+			LAND_COLOR l_c;
+			switch (labirint[y][x])
+			{
+			case BLANK:
+				l_c = BLANKc;
+				break;
+			case WALL:
+				l_c = WALLc;
+				break;
+			case HP:
+				l_c = HPc;
+				break;
+			case LAVA:
+				l_c = LAVAc;
+				break;
+			case WATER:
+				l_c = WATERc;
+				break;
+			case SAND:
+				l_c = SANDc;
+				break;
+			case ACID:
+				l_c = ACIDc;
+				break;
+			case ACID1:
+				l_c = ACID1c;
+				break;
+			case ACID2:
+				l_c = ACID2c;
+				break;
+			case ACID3:
+				l_c = ACID3c;
+				break;
+			case ACID4:
+				l_c = ACID4c;
+				break;
+			case ACID5:
+				l_c = ACID5c;
+				break;
+			case WAY:
+				l_c = WAYc;
+				break;
+				l_c = ACID5c;
+				break;
+			case ACID6:
+				l_c = ACID6c;
+				break;
+			case ACID7:
+				l_c = ACID7c;
+				break;
+			case ACID8:
+				l_c = ACID8c;
+				break;
+			case UP:
+				l_c = UPc;
+				break;
+			case GRID:
+				l_c = GRIDc;
+				break;
+			case GRID1:
+				l_c = GRID1c;
+				break;
+			case LINE:
+				l_c = LINEc;
+				break;
+			case MONEY:
+				l_c = MONEYc;
+				break;
+			default:
+				l_c = BLANKc;
+				break;
+			}
+			SetConsoleTextAttribute(h, l_c);
+			cout << (char)labirint[y][x];
+		}
+		cout << endl;
+	}
+}
+void gameProcess()
+{
+	do
+	{
+		COORD c = { smilePosition.X, smilePosition.Y };
+		Sleep(sleep_time);//выдерживаем паузу
+		if (_kbhit())
+		{
+			int k = _getch();
+			if (k == 0 || k == 224)
+				k = _getch();
+
+			switch (k)//отправл€ем результат дл€ управлени€ оператором выбора
+			{
+			case 'S':
+			case 's':
+			case 80://если была нажата клавиша вниз
+
+				dy = 1;//то приращение по оси ординат будет положительным
+				dx = 0;//по оси абсцисс приращение нулевое
+				break;
+			case 'W':
+			case 'w':
+			case 72://если вверх
+				dy = -1;//аналогично согласно геометрической логике
+				dx = 0;
+				break;
+			case 'A':
+			case 'a':
+			case 75://есди влево
+				dy = 0;
+				dx = -1;
+				break;
+			case 'D':
+			case 'd':
+			case 77://если вправо
+				dy = 0;
+				dx = 1;
+				break;
+			case 27://если была нажата клавиша ESC
+				flag = false;//устанавливаем флажок на Ћќ∆№
+				//break пропускаем специально, чтоб сработал default
+			default:
+				dx = dy = 0;//если была нажата люба€ ина€ клавиша, то приращени€ равны нулю
+			}
+		}
+		int X = c.X + dx;
+		int Y = c.Y + dy;
+		if ((labirint[Y][X] != WALL) && (labirint[Y][X] != ACID1) && (labirint[Y][X] != ACID2) && (labirint[Y][X] != ACID3) && (labirint[Y][X] != ACID4) && (labirint[Y][X] != ACID5) && (labirint[Y][X] != ACID6) && (labirint[Y][X] != ACID7) && (labirint[Y][X] != ACID8) && (labirint[Y][X] != UP))
+		{
+			switch (prevPx)
+			{
+			case LAVA:
+				SetConsoleTextAttribute(h, LAVAc);
+				break;
+			case WATER:
+				SetConsoleTextAttribute(h, WATERc);
+				break;
+			case SAND:
+				SetConsoleTextAttribute(h, SANDc);
+				break;
+			case ACID:
+				SetConsoleTextAttribute(h, ACIDc);
+				break;
+			case HP:
+				SetConsoleTextAttribute(h, HPc);
+				break;
+			case WAY:
+				SetConsoleTextAttribute(h, WAYc);
+				break;
+			case GRID:
+				SetConsoleTextAttribute(h, GRIDc);
+				break;
+			case GRID1:
+				SetConsoleTextAttribute(h, GRID1c);
+				break;
+			case LINE:
+				SetConsoleTextAttribute(h, LINEc);
+				break;
+			}
+			if (prevPx == MONEY)
+			{
+				prevPx = BLANK;
+				labirint[smilePosition.Y][smilePosition.X] = BLANK;
+			}
+			printChar(prevPx);
+			smilePosition.X += dx;
+			smilePosition.Y += dy;
+			prevPx = labirint[smilePosition.Y][smilePosition.X];
+			SetConsoleTextAttribute(h, SMILEc);
+			printChar(smile);
+		}
+		if (labirint[Y][X] == LAVA)
+			hp = 0;
+		else if (labirint[Y][X] == ACID)
+			hp =0;
+		else if (labirint[Y][X] == SAND)
+			hp =0;
+		else if (labirint[Y][X] == WATER)
+			hp =0;
+		else if (labirint[Y][X] == LINE)
+			hp = 0;
+		else if (labirint[Y][X] == MONEY)
+			money++;
+		printPanel();
+	} while (hp!=0 && money!=cost);
+}
+void help()
+{
+	char symb1 = 24, symb2 = 25, symb3 = 26, symb4 = 27;
+	cout << " Target: escape from maze \n " << symb1
+		<< "-Up\n " << symb2 << "-Down\n " << symb3
+		<< "-Right\n " << symb4 << "-Left\n ESC-exit "
+		<< endl << "ACID = kill you from one touch\nWATER = kill you from one touch\nSAND = kill you from one touch\nLAVA = kill you from one touch\nPoints need you to win\n\nCollect all points to WIN!!!\nGOOD LUCK!" << endl;
+}
+void startGame()
+{
+	Labirint();
+	do
+	{
+		//Sleep(sleep_time);
+		gameProcess();
+		printPanel();
+		if (hp == 0)
+			isGameActive = false;
+		else if (money == cost)
+			finalscore++;
+			isGameActive = false;
+	} while (isGameActive);
+}
+
+void main()
+{
+	CONSOLE_CURSOR_INFO cci = { sizeof(cci), false };
+	SetConsoleCursorInfo(h, &cci);
+	do{
+		SetConsoleTextAttribute(h, 14);
+		cout << "1 - start" << endl << "2 - help" << endl << "3 - exit" << endl;
+		int menu1 = 0;
+		cin >> menu1;
+		system("cls");
+		switch (menu1)
+		{
+		case 1:
+			isGameActive = true;
+			SetConsoleTextAttribute(h, 14);
+			startGame();
+			system("cls");
+			if (finalscore == 1)
+			{
+				SetConsoleTextAttribute(h, 10);
+				cout << "You win!Congratulations!!!" << endl;
+			}
+			else{
+				SetConsoleTextAttribute(h, 12);
+				cout << "GAME OVER!\n";
+			}
+			break;
+		case 2:
+			help();
+			break;
+		case 3:
+			isProgramActive = false;
+			break;
+		}
+	} while (isGameActive);
+}

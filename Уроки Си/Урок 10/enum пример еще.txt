@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	enum Color { red, green, blue };
+	Color c = red;
+	int a = red;
+	Color c = (Color)2;
+	cin >> a;
+	switch (a)
+	{
+	case red :
+		cout << "Red\n";
+		break;
+	}
+}

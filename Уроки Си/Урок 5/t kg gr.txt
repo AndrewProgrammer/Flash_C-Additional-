@@ -1,0 +1,11 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	double massa = 200.785123;
+	int t, kg, g;
+	t = (int)massa;
+	kg = (massa - t) * 1000;
+	g = ((massa - t) * 1000 - kg) * 1000;
+	cout << t << "t" << kg << "kg" << g << "g";
+}

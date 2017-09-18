@@ -1,0 +1,63 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+using namespace std;
+
+template<typename T>
+void Print(T a[], int size)
+{
+	for(int i=0; i<size; ++i)
+		cout<<a[i]<<' ';
+	cout<<endl<<"____________________"<<endl;
+}
+
+//Сортировка выбором
+template<typename T>
+void Sort1(T a[], int size)
+{
+	int min;
+	for(int i=0; i<size; ++i)
+	{
+		min=i;
+		for(int j=i+1; j<size; ++j)
+		{
+			if(a[j]<a[min])
+				min=j;
+			
+		}
+		swap(a[min],a[i]);
+	}
+}
+
+int Search(int a[],int b, int e, int value)
+{
+	int center=(b+e)/2;
+	if(a[center]==value)
+		return center;
+	if(b>=e) 
+		return -1;
+	if(a[center]<value) 
+		 return Search(a,center+1,e,value);
+	else
+		 return Search(a,b,center-1,value);
+	return -1;
+}
+
+void main()
+{
+	const int size=10;
+	int a[size];
+	srand((int)time(0));
+	for(int i=0; i<size; ++i)
+	{
+		a[i]=rand()%size;
+	}
+	Print(a, size);
+	Sort1(a,size);
+	Print(a, size);
+	for(int i=0; i<size; ++i)
+		cout<<i<<' '<<Search(a,0,size-1,i)<<endl;
+}
+
+

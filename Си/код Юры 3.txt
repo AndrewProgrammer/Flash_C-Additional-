@@ -1,0 +1,75 @@
+string a = "Hello, World.";
+// Заменяет подстроку 2-м параметром
+string b = a.Replace("World", "Kitty");
+string c = a.Replace("o", "i"); // "Helli, Wirld."
+ 
+// b = "Hello, Kitty.";
+ 
+string Substring(int индексПервыйСимвол, [int количество])
+ 
+string d = a.Substring(8); // "World."
+string e = a.Substring(1, 5); // "ello,"
+ 
+string Remove(int индексПервыйСимвол, [int количество])
+ 
+var f = a.Remove(8); // "Hello, "
+var g = a.Remove(1, 5); // "H World."
+ 
+ 
+/// Секре^ты Уиндовс^ 3.1
+ 
+// настройка Уиндовс 3.1 для максимальной эффективности
+ 
+string q = "наполненная новыми недокументированными возможностями";
+int IndexOf(char/string, [int начиная_С])
+ 
+int w = q.IndexOf("новыми"); // 12
+int w1 = q.IndexOf("наполненная"); // 0
+int r = q.IndexOf("Windows"); // -1
+int t = q.IndexOf('o'); // 3
+int y = q.IndexOf('o', 4); // 13
+ 
+int LastIndexOf(char/string, [int заканчиваяСимволом]);
+ 
+string a1 = "Оптимизация.ДОС;5и_КЕММ=для!Уиндовс"
+ 
+int IndexOfAny(string array, [...]);
+int a2 = a1.IndexOfAny(".;_!="); // ~10
+int a3 = a1.IndexOfAny(..., ~10 + 1); // ~14
+ 
+LastIndexOfAny(...)
+ 
+var z = "aBC";
+string ToUpper();
+var x = z.ToUpper(); // "ABC"
+ 
+string ToLower();
+var v = z.ToLower(); // "abc"
+ 
+/////
+class { name, phone, nationality }
+ 
+Ivan, 1234567, Ruske
+ 
+for (;;) {
+       
+}
+ v v
+class ENTER_YOUR_NAME {
+        public string Name;
+        public string Phone;
+        public string Nazi;
+}
+static void Main() {
+        ...
+        var VARIABLE_NAME = new ENTER_YOUR_NAME[];
+        for (;; )
+        {
+                var NEW_ENTRY_VARIABLE_NAME = new ENTER_YOUR_NAME();
+                var YOUR_LINE = Console.ReadLine();
+                ...
+                NEW_ENTRY_VARIABLE_NAME.Name = ...;
+ 
+                VARIABLE_NAME.Add(NEW_,..);
+        }
+}

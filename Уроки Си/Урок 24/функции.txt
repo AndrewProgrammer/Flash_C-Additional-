@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+void World();
+void Star(int count);
+void StarEx(int count, char symb);
+int MyPow(int numbr, int st);
+int Ted(int value);
+int summa(int mas[], int size);
+
+void main()
+{
+	const int count = 10;
+	int ar[count] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	cout << summa(ar, count) << endl << endl;
+	int value = 20;
+	cout << value;
+	Ted(value);
+	cout << value;
+	cout << " --- " << MyPow(2, 3) << " ---- " << endl;
+	StarEx(20, 177);
+	World();
+	StarEx(15, 186);
+	for (int i = 0; i < 10; i++)
+	{
+		StarEx(i, 16);
+	}
+}
+void World()
+{
+	cout << "Hello World!" << endl;
+}
+void Start(int count)
+{
+	for (int i = 0; i < count; i++)
+		cout << "*";
+	cout << endl;
+}
+void StarEx(int count, char symb)
+{
+	for (int i = 0; i < count; i++)
+		cout << symb;
+	cout << endl;
+}
+int MyPow(int number, int st)
+{
+	int res = 1;
+	for (int i = 0; i < st; i++)
+		res *= number;
+	return res;
+}
+int summa(int mas[], int size)
+{
+	int res = 0;
+	for (int i = 0; i < size; i++)
+		res += mas[i];
+	return res;
+}
+int Ted(int value)
+{
+	value++;
+	return value;
+}

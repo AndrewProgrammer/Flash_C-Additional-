@@ -1,0 +1,167 @@
+#include <Windows.h>
+#include <iostream>
+#include <ctime>
+#include <conio.h>
+using namespace std;
+
+const int width = 10, height = 10;
+int pole[height][width] = { 0 };
+
+void InitGame()
+{
+	for (int i = 0; i<height; ++i)
+	for (int j = 0; j<width; ++j)
+		pole[i][j] = 0;
+	double mines = width*height*0.1;
+	int x, y;
+	do{
+		x = rand() % width;
+		y = rand() % height;
+		if (pole[y][x]<100)
+		{
+			--mines;
+			pole[y][x] = 100;
+			for (int i = y - 1; i<y + 2; ++i)
+			for (int j = x - 1; j<x + 2; ++j)
+			if (i >= 0 && j >= 0 && i<height&&j<width)
+				++pole[i][j];
+		}
+	} while (mines);
+	for (int i = 0; i<height; ++i)
+	for (int j = 0; j<width; ++j)
+		pole[i][j] -= 200;
+}
+
+void Draw(int x, int y)
+{
+	system("cls");
+	for (int i = 0; i <= height * 2; ++i)
+	{
+		for (int j = 0; j <= width * 2; ++j)
+		{
+			if (x * 2 + 1 == j && (i == y * 2 || i == y * 2 + 2))
+				cout << char(0xcd);
+			else if (y * 2 + 1 == i && (j == x * 2 || j == x * 2 + 2))
+				cout << char(0xba);
+			else if (i == 0 && j == 0)
+				cout << char(0xda);
+			else if (i == 0 && j == width * 2)
+				cout << char(0xbf);
+			else if (j == 0 && i == height * 2)
+				cout << char(0xc0);
+			else if (i == height * 2 && j == width * 2)
+				cout << char(0xd9);
+			else if (i == 0 && j % 2 == 0)
+				cout << char(0xc2);
+			else if (i == height * 2 && j % 2 == 0)
+				cout << char(0xc1);
+			else if (j == 0 && i % 2 == 0)
+				cout << char(0xc3);
+			else if (j == width * 2 && i % 2 == 0)
+				cout << char(0xb4);
+			else if (i % 2 == 0 && j % 2 == 0)
+				cout << char(0xc5);
+			else if (i % 2 == 0)
+				cout << char(0xc4);
+			else if (j % 2 == 0)
+				cout << char(0xb3);
+			else if (pole[i / 2][j / 2] >= 200)
+				cout << char(4);
+			else if (pole[i / 2][j / 2] >= 100)
+				cout << 'X';
+			else if (pole[i / 2][j / 2]>0)
+				cout << pole[i / 2][j / 2];
+			else if (pole[i / 2][j / 2] == 0)
+				cout << ' ';
+			else
+				cout << char(0xdb);
+
+		}
+		cout << endl;
+	}
+}
+
+void Hod(int x, int y)
+{
+	if (pole[y][x] >= 0)
+		return;
+	pole[y][x] += 200;
+	if (pole[y][x] == 0)
+	{
+		for (int i = y - 1; i<y + 2; ++i)
+		for (int j = x - 1; j<x + 2; ++j)
+		if (i >= 0 && j >= 0 && i<height&&j<width)
+			Hod(j, i);
+	}
+}
+
+void SetFlag(int x, int y)
+{
+	if (pole[y][x]<0)
+		pole[y][x] += 1000;
+	else if (pole[y][x]>200)
+		pole[y][x] -= 1000;
+}
+
+int GameState()
+{
+	int counter = 0;
+	for (int i = 0; i<height; ++i)
+	for (int j = 0; j<width; ++j)
+	{
+		if (pole[i][j] >= 0 && pole[i][j]<10)
+			++counter;
+		else if (pole[i][j] >= 100 && pole[i][j]<200)
+		{
+			return -1;
+		}
+	}
+	double mines = width*height*0.1;
+	if (counter == width*height - mines)
+		return 1;
+	return 0;
+}
+
+void ShowField()
+{
+	for (int i = 0; i<height; ++i)
+	for (int j = 0; j<width; ++j)
+	if (pole[i][j]<0)
+		pole[i][j] += 200;
+}
+
+void Game()
+{
+	int x = 0, y = 0, c;
+	int gSt = 0;
+	InitGame();
+	do{
+		Draw(x, y);
+		int c = _getch();
+		if (c == 224 || c == 0)
+			c = _getch();
+		switch (c)
+		{
+		case 75: if (x>0) --x; break;
+		case 77: if (x<width - 1) ++x; break;
+		case 72: if (y>0) --y; break;
+		case 80: if (y<height - 1) ++y; break;
+		case 13: Hod(x, y); gSt = GameState(); break;
+		case 32: SetFlag(x, y);
+		}
+
+	} while (!gSt);
+	ShowField();
+	Draw(x, y);
+	if (gSt == 1)
+		cout << "You win!";
+	else
+		cout << "You loose!";
+}
+
+void main()
+{
+	srand((int)time(0));
+	Game();
+
+}

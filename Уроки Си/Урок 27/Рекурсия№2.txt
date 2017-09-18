@@ -1,0 +1,22 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+int Degree(int b, int e, int s);
+void main()
+{
+	int base, exponent, one = 1;
+	base = exponent = 0;
+	cout << "Enter base: ";
+	cin >> base;
+	cout << "Enter exponent: ";
+	cin >> exponent;
+	cout << Degree(base, exponent, one);
+}
+
+int Degree(int b, int e, int s)
+{
+	if (e == 0)
+		return s;
+	else
+		return Degree(b, e - 1, s *= b);
+}

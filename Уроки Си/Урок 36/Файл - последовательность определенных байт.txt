@@ -1,0 +1,30 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstdio>
+#include <Windows.h>
+using namespace std;
+
+void main()
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	char filepath[80];
+	cout << "Enter file path" << endl;
+	cin.getline(filepath, 79);
+	FILE *f = fopen(filepath, "r");
+	char buffer[100];
+	if (f)
+	{
+		cout << "Reading complete!\n";
+		while (fgets(buffer, 100, f))
+		{
+			cout << buffer;
+		}
+		fclose(f);
+	}
+	else
+	{
+		cout << "Error reading\n";
+	}
+	system("pause");
+}

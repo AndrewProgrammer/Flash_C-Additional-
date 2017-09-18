@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	const int size = 10;
+	int sum = 0;
+	int a[size];
+	for (int i = 0; i < size; i++)
+	{
+		cout << "Enter number\n";
+		cin >> a[i];
+		sum += a[i];
+	}
+	cout << "Sum of this numbers:\n" << sum << endl << endl;
+	cout << "Repeating these numbers:\n";
+	for (int j = 0; j < size; j++)
+	{
+		cout <<  a[j] << " ";
+	}
+	cout << endl;
+	cout << "conversely these numbers :\n";
+	for (int k = 9; k >= 0; k--)
+	{
+		cout << a[k] << " ";
+	}
+	cout << endl;
+}

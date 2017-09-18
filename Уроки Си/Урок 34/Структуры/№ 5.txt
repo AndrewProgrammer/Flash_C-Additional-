@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+struct Drob
+{
+	int a;
+	int b;
+	void NOD();
+	void show();
+};
+void Drob::NOD() {
+	int a_a = a;
+	int b_b = b;
+	int buf;
+	while (b_b != 0) {
+		buf = b_b;
+		b_b = a_a % b_b;
+		a_a = buf;
+	}
+	a /= a_a;
+	b /= a_a;
+}
+void Drob::show() {
+	int buf = a % b;
+	if (!buf) cout << a / b << endl;
+	else cout << a << "/" << b << endl;
+
+}
+Drob operator+(Drob ob1, Drob ob2)
+{
+	Drob temp;
+	temp.b = ob1.b * ob2.b;
+	temp.a = (temp.b / ob1.b) * ob1.a + (temp.b / ob2.b) * ob2.a;
+	return temp;
+}
+Drob operator-(Drob ob1, Drob ob2)
+{
+	Drob temp;
+	temp.b = ob1.b * ob2.b;
+	temp.a = (temp.b / ob1.b) * ob1.a - (temp.b / ob2.b) * ob2.a;
+	return temp;
+}
+Drob operator*(Drob ob1, Drob ob2)
+{
+	Drob temp;
+	temp.a = ob1.a * ob2.a;
+	temp.b = ob1.b * ob2.b;
+	return temp;
+}
+Drob operator/(Drob ob1, Drob ob2)
+{
+	Drob temp;
+	temp.a = ob1.a * ob2.a;
+	if (ob2.b != 0)
+	{
+		temp.b = ob1.b / ob2.b;
+	}
+	else cout << "Error";
+	return temp;
+}
+void main()
+{
+	setlocale(0, "ru");
+}

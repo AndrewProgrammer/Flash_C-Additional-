@@ -1,0 +1,49 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+struct Employ
+{
+	char *name;
+	double salary;
+	int CountMissing;
+};
+void Firing(Employ *s)
+{
+	if (s->CountMissing > 5)
+	{
+		cout << "You fire!: " << s->name << endl;
+	}
+}
+void Free(Employ s[], int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		delete [] s[i].name;
+	}
+}
+void Input(Employ *s)
+{
+	cout << "Enter name of employer: \n";
+	s->name = new char[20];
+	cin.get();
+	cin.getline(s->name, 20);
+	cout << "Enter salary of this employer: \n";
+	cin >> s->salary;
+	cout << "Enter count of missing per mounth of this employer: \n";
+	cin >> s->CountMissing;
+}
+void main()
+{
+	setlocale(0, "ru");
+	Employ d[4];
+	for (int i = 0; i < 4; i++)
+	{
+		cout << i + 1 << "Employer: \n\n";
+		Input(&d[i]);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		Firing(&d[i]);
+	}
+	Free(d, 4);
+}

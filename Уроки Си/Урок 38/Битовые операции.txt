@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	unsigned short compress = 0; //0000 0000 0000 0000
+	compress = 10;// 0000 0000 0000 1010
+	compress <<= 4;// 0000 0000 1010 0000
+	compress |= 6; // 0000 0000 1010 0110
+	cout << compress << endl; // 1-first compress
+	compress <<= 8; // 1010 0110 0000 0000
+	compress |= 'A'; // 1010 0110 0100 0001
+	cout << compress << endl;// 2-second compress
+	int color_one = compress >> 12;
+	char sym = compress & 127;
+	cout << sym << endl;
+	cout << color_one << endl;//result color
+
+}

@@ -1,0 +1,74 @@
+Windows API. Windows 95.
+API - Aplication Programming Interface.
+WinCRT. - Windows 8.
+WinD - Windows 10.
+character set - набор символов который кодируется.
+Все начали использовать 8 bit из 7 bit применялись для своих целей( и так появилось много кодировок)
+ASCII - American Standart Code For Information Interchange.( 7 - bit (128 значений))
+ANSI - American National Standart Institute( 8 - bit(256 значений))
+DBCS - Double Byte Character Set.
+Unicode (UTF - 16) - unicode transformation code. 65360 значений.
+(UTF - 8 , UTF - 32).
+В языке С++: новый тип char - wchar_t(означает что он расширенный)(2 byte)
+раньше он был: typedef unsigned short wchar_t;
+WinAPI:
+char str[] = "Hello";//6 засчет \0 (ANSCII  кодировка)
+wchar_t str[] = L"Hello";//unicode (каждый элемент занимает 2 byte)
+WinAPI:
+char x = 'a';
+wchar_t y = L'a';//Без L сработает
+WinAPI:
+_TRUNCATE - размер, сколько нам нужно туда передать,изначально он равен -1
+для WinAPI (Windows.h)
+MultiByteToWideChar(CP_ACP, 0U, ansiString, -1 , nullptr , 0);//Функция вернет(сколько нужно памяти для такой конвертации) если мы впишем (nullptr , 0)
+MultiByteToWideChar(CP_ACP, 0U , ansiString, - 1, unicodeString , capacity); //Ту которую чаще используют, CP_ACP, 0U - это флаги.(Принимает куда, до скольки, что именно, и буфер)
+Для того чтобы узнать что делают функции функциями гуглим MSDN.
+strlen(str);
+wcslen(str); //Unicode.
+отличия между ними только одни str - заменяется wcs.
+-------------------------------------------------------
+SetWindowTextA(und, ansiStr);
+SetWindowTextW(und,unicodeStr);
+#ifdef UNICODE
+#define TEXT(x) L##x//(конкатенация(объединения) идентификаторов)//В данном случаи TEXT это как if ( в который мы передаем тип данных x(x - Hello))
+#else
+#define TEXT(x) x
+#endif
+#ifdef UNICODE
+#define SetWindowText SetWindowTextW
+#else
+#define SetWindowText SetWindowTextA
+#endif
+SetWindowText(und,TEXT("Hello"));//Компилируется в любой кодировке
+SetWindowText(und,"Hello");//Не скомпилиться так как кодировка ASCII, которая запрещенна в предпроцессоре 
+_tcslen(_TEXT("Hello"));//Работает по такому же принципу, отличие только в том что он принимает текст и unicode 
+#ifdef DEBUG // например если мы хотим в конце при DEBUG сделать вывести сообщение.
+#ifdef _UNICODE//Для srt (разыне библиотеки)
+#define tstrubg std::wstring//Если мы хотим поменять тип данных у них то пишем #include <string>
+#else
+#define tstring std::string
+#endif
+--------------------------------------------------------------
+GUI - Graphical User Interface
+Window - Окно (объект в памяти), кнопка - окно, текст - окно, у каждого окна есть дескриптор.
+Spy - мониторинг 
+Emptypoint.cpp
+--------------------------------------------------------------
+Соглашение о вызове функций(__stdcall) - параметры функции в стек передаються справа на лево и вызывающая функция очищает стек за вызываемой.
+Главная функция может называться WinMain, wWinMain.
+Дескриптор - точка доступа к чему то (уникальное имя).
+HINSTANCE instance - применяется для описание - дескриптора приложения. 
+//Пак названий для str
+LPTSTR(тип данных) - указатель на строку char * (Longpointerstr)
+Машинное слово - надо узнать?
+LPCSTR - const char*
+LPWSTR - wchar_t *
+LPCWSTR - const wchar_t*
+LPTSTR - указатель на наше приложение
+LPCSTR - unicode версия 
+//
+INT showCommand -указатель на командную строку.
+
+
+
+

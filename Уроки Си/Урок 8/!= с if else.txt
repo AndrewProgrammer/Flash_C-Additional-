@@ -1,0 +1,14 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	int a;
+	cout << "Vedite a\n";
+	cin >> a;
+	if (a%3!=0)
+	{
+		cout << "четное и больше 20\n";
+	}
+	else cout << "нечетное \n";
+}

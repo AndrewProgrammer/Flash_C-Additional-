@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	float a, b, res;
+	cout << "Enter digit\n";
+	cin >> a;
+	cout << "Enter digit 2\n";
+	cin >> b;
+	char key;
+	cout << "Enter operation\n";
+	cin >> key;
+	if (key == '+')
+		cout << a + b;
+	else if (key == '-')
+		cout << a - b;
+	else if (key == '*')
+		cout << a*b;
+	else if (key == '/')
+	{
+		if (b)
+			cout << a / b;
+		else
+			cout << "Error!\n";
+	}
+	else
+		cout << "Error!\n";
+}

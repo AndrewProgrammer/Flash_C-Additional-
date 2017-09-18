@@ -1,0 +1,65 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+enum COLOR{
+	BLACK,
+	BLUE,
+	GREEN,
+	DARK_BLUE,
+	RED,
+	VIOLET,
+	YELLOW,
+	WHITE,
+	GREY,
+	LIGHT_BLUE,
+	LIGHT_GREEN,
+	AQUA,
+	LIGHT_RED,
+	LIGHT_VIOLET,
+	LIGHT_YELLOW,
+	LIGHT_WHITE
+};
+void main()
+{
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	int p1[5][5] = {
+		{WHITE,WHITE,RED,WHITE,WHITE},
+		{WHITE,RED,RED,RED,WHITE},
+		{ RED, RED, RED, RED, RED,},
+		{ WHITE, RED, RED, RED, WHITE },
+		{ WHITE, WHITE, RED, WHITE, WHITE }
+	};
+	int p2[5][5] = {
+		{ WHITE, WHITE, RED, WHITE, WHITE },
+		{ WHITE, WHITE, RED, WHITE, WHITE },
+		{ RED, RED, RED, RED, RED, },
+		{ WHITE, WHITE, RED, WHITE, WHITE },
+		{ WHITE, WHITE, RED, WHITE, WHITE }
+	};
+	while (true)
+	{
+		for (int y = 0; y < 5; y++)
+		{
+			for (int x = 0; x < 5; x++)
+			{
+				SetConsoleTextAttribute(h, p2[y][x]);
+				cout << (char)219;
+			}
+			cout << endl;
+		}
+		Sleep(500);
+		SetConsoleCursorPosition(h, { 0, 0 });
+		for (int y = 0; y < 5; y++)
+		{
+			for (int x = 0; x < 5; x++)
+			{
+				SetConsoleTextAttribute(h, p1[y][x]);
+				cout << (char)219;
+			}
+			cout << endl;
+		}
+		Sleep(500);
+		SetConsoleCursorPosition(h, { 0, 0 });
+	}
+
+}

@@ -1,0 +1,90 @@
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
+using namespace std;
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);//создаем объект, содержащий информацию о потоке вывода (хендл)
+CONSOLE_CURSOR_INFO cci = { sizeof(cci), false };//создаем объект, содержащий настройки дл€ хендла с указанием не отображать курсор
+struct pryam
+{
+	short a, b;
+	int point_x, point_y;
+};
+void Moving(short visota, short dlina)
+{
+	COORD c = { visota, dlina };
+	int dx = 0, dy = 0;
+	while (1)
+	{
+		int k = _getch();//считываем код нажатой клавиши
+		if (k == 0 || k == 224)//если была нажата управл€юща€ клавиша
+			k = _getch();//то считываем второй код из буфера
+		switch (k)//отправл€ем результат дл€ управлени€ оператором выбора
+		{
+		case 'S':
+		case 's':
+		case 80://если была нажата клавиша вниз
+			dy = 1;//то приращение по оси ординат будет положительным
+			dx = 0;//по оси абсцисс приращение нулевое
+			break;
+		case 'W':
+		case 'w':
+		case 72://если вверх
+			dy = -1;//аналогично согласно геометрической логике
+			dx = 0;
+			break;
+		case 'A':
+		case 'a':
+		case 75://есди влево
+			dy = 0;
+			dx = -1;
+			break;
+		case 'D':
+		case 'd':
+		case 77://если вправо
+			dy = 0;
+			dx = 1;
+			break;
+		case 27://если была нажата клавиша ESC
+			exit(0);//устанавливаем флажок на Ћќ∆№
+			//break пропускаем специально, чтоб сработал default
+		default:
+			dx = dy = 0;//если была нажата люба€ ина€ клавиша, то приращени€ равны нулю
+		}
+	}
+		c.X += dx;//приращаем абсциссу
+		c.Y += dy;//приращаем ординату
+		if (c.X < 0)//провер€ем на выход за левую границу консоли
+			c.X = 0;//и устанавливаем минимально допустимое значение абсциссы
+		else if (c.X > 70)
+			c.X = 70;
+		if (c.Y < 0)//то же самое дл€ ординаты
+			c.Y = 0;
+		else if (c.Y > 20)
+			c.Y = 20;
+
+}
+void PrintPryam(double visota, double dlina , COORD t)
+{
+	SetConsoleTextAttribute(h, 12);
+	for (int y = 0; y < visota; y++)
+	{
+		SetConsoleCursorPosition(h, t);
+		for (int x = 0; x < dlina; x++)
+			if (x == 0 || y == 0 || x == dlina - 1 || y == visota - 1)
+				cout << '*';
+			else
+				cout << ' ';
+		t.Y++;
+	}
+}
+void main()
+{
+	setlocale(0, "ru");
+	pryam point;
+	cout << "¬ведите ширину и высоту пр€моугольника\n";
+	cin >> point.a;
+	cin >> point.b;
+	COORD c = { point.a, point.b };
+	PrintPryam(point.a, point.b , c);
+	Moving(point.a, point.b);
+}

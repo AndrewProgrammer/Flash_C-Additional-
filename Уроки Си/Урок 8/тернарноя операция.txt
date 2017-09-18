@@ -1,0 +1,10 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	int a;
+	int choice;
+	cin >> choice;
+	a = (choice == 1) ? 10 : 20;
+	cout << a;
+}

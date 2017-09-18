@@ -1,0 +1,14 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");(русские буквы возможно,если хоти вернуть на английсий язык:setlocale(0,"C");пишем перед cout)
+	int a;
+	cout << "Vedite a\n";
+	cin >> a;
+	if (a % 2 == 0)
+	{
+		cout << "четное\n";
+	}
+	else cout << "нечетное \n";
+}

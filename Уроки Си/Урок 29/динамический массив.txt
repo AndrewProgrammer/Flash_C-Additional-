@@ -1,0 +1,19 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+void main()
+{
+	srand(time(0));
+	int size = 0;
+	int *ar;
+	cout << "Enter ar size" << endl;
+	cin >> size;
+	ar = new int[size];
+	for (int i = 0; i < size; i++)
+	{
+		ar[i] = rand() % 10;
+		cout << ar[i] << "\t";
+	}
+	delete[] ar;
+	system("pause");
+}

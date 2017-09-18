@@ -1,0 +1,111 @@
+#include <Windows.h>
+#include <iostream>
+#include <ctime>
+#include <conio.h>
+using namespace std;
+
+void main()
+{
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD z = { 0, 0 };
+	const int width = 30, height = 20, length=25;
+	int x[length], y[length];
+	char symbols[length];
+	for (int i = 0; i < length; ++i)
+	{
+		x[i] = i + 1;
+		y[i] = 1;
+		symbols[i] = 0xcd;// =
+	}
+	symbols[length - 1] = 2;
+	int dx=1, dy=0, c;
+	do
+	{
+		do
+		{
+			SetConsoleCursorPosition(hOut, z);
+			for (int i = 0; i <= height; ++i)
+			{
+				for (int j = 0; j <= width; ++j)
+				{
+					int k;
+					for (k = 0; k < length-1; ++k)
+					{
+						if (j == x[k] && i == y[k])
+							break;
+					}
+					if (j == x[length - 1] && i == y[length - 1])
+					{
+						SetConsoleTextAttribute(hOut, 0x0c);
+						cout << symbols[length-1];
+						SetConsoleTextAttribute(hOut, 0x07);
+					}
+					else if (k < length-1)
+					{
+						SetConsoleTextAttribute(hOut, 0x0a);
+						cout << symbols[k];
+						SetConsoleTextAttribute(hOut, 0x07);
+					}
+					else if (i == 0 || j == 0 || i == height || j == width)
+						cout << char(0xdb);
+					else
+						cout << ' ';
+				}
+				cout << endl;
+			}
+			Sleep(100);
+			if (dx == 1 && x[length - 1]<width - 1 || dx == -1 && x[length - 1]>1 ||
+				dy == 1 && y[length - 1]<height - 1 || dy == -1 && y[length - 1]>1)
+			{
+				for (int i = 0; i < length - 1; ++i)
+				{
+					x[i] = x[i + 1];
+					y[i] = y[i + 1];
+					symbols[i] = symbols[i + 1];
+				}
+				x[length - 1] += dx;
+				y[length - 1] += dy;
+				if (y[length - 1] == y[length - 2] && y[length - 2] == y[length - 3])
+					symbols[length - 2] = 0xcd;
+				else if (x[length - 1] == x[length - 2] && x[length - 2] == x[length - 3])
+					symbols[length - 2] = 0xba;
+				else if (y[length - 1] == y[length - 2] && y[length - 2] == y[length - 3]-1 
+					&& x[length - 1] == x[length - 2]-1)
+					symbols[length - 2] = 0xbb;
+				else if (y[length - 1] == y[length - 2] && y[length - 2] == y[length - 3] - 1
+					&& x[length - 1] == x[length - 2] + 1)
+					symbols[length - 2] = 0xc9;
+				else if (y[length - 1] == y[length - 2] && y[length - 2] == y[length - 3] + 1
+					&& x[length - 1] == x[length - 2] + 1)
+					symbols[length - 2] = 0xc8;
+				else if (y[length - 1] == y[length - 2] && y[length - 2] == y[length - 3] + 1
+					&& x[length - 1] == x[length - 2] - 1)
+					symbols[length - 2] = 0xbc;
+				else if (x[length - 1] == x[length - 2] && x[length - 2] == x[length - 3] + 1
+					&& y[length - 1] == y[length - 2] - 1)
+					symbols[length - 2] = 0xbc;
+				else if (x[length - 1] == x[length - 2] && x[length - 2] == x[length - 3] + 1
+					&& y[length - 1] == y[length - 2] + 1)
+					symbols[length - 2] = 0xbb;
+				else if (x[length - 1] == x[length - 2] && x[length - 2] == x[length - 3] - 1
+					&& y[length - 1] == y[length - 2] - 1)
+					symbols[length - 2] = 0xc8;
+				else if (x[length - 1] == x[length - 2] && x[length - 2] == x[length - 3] - 1
+					&& y[length - 1] == y[length - 2] + 1)
+					symbols[length - 2] = 0xc9;
+
+			}
+		} while (!_kbhit());
+		c = _getch();
+		if (c == 224 || c == 0)
+			c = _getch();
+		switch (c)
+		{
+		case 75: dx = -1; dy = 0; break;
+		case 77: dx = 1; dy = 0; break;
+		case 72: dx = 0; dy = -1; break;
+		case 80: dx = 0; dy = 1; break;
+		}
+	} while (1);
+
+}

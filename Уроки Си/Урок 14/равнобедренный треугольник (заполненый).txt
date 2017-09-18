@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	int size;
+	cout << "¬ведите длину стороны квадрата:\n";
+	cin >> size;
+	for (int y = 0; y < size; y++)
+	{
+		for (int x = 0; x < size * 2 -1; x++)
+		{
+			if (x + y >= size - 1 && x - y <= size - 1|| y == size - 1 )
+				cout << '*';
+			else
+				cout << ' ';
+		}
+		cout << endl;
+	}
+}

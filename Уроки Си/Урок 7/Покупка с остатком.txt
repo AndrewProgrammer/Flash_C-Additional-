@@ -1,0 +1,13 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	int grn, S, kol, ost;
+	cout << "Vedite ckolko deneg\n";
+	cin >> grn;
+	cout << "Vedite stoimoct\n";
+	cin >> S;
+	kol = grn / S;
+	ost = grn % S;
+	cout << kol << "Vedite kolichestvo tovara\n" << ost << "ostaok";
+}

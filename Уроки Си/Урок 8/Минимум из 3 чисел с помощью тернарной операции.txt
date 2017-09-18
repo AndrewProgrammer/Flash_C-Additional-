@@ -1,0 +1,11 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	int a, b, c;
+	cout << "Определить какое число наибольшее\nВведите три числа\n";
+	cin >> a >> b >> c;
+	a = (a > b) ? ((a > c) ? a : c) : ((b > c)) ? b : c;
+	cout << "Самое наибольшее число это " << a << endl;
+}

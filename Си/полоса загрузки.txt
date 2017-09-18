@@ -1,0 +1,39 @@
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
+using namespace std;
+
+void main()
+{
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cci = { sizeof(cci),false };
+	SetConsoleCursorInfo(h, &cci);
+	int x = 0, y = 3;
+	char s = 219;
+	COORD c = { 10, 2 };
+	SetConsoleCursorPosition(h, c);
+	cout << "LOADING...";
+	
+	SetConsoleTextAttribute(h, 10);
+	while (x < 75)
+	{
+		c.X = x, c.Y = y;
+		SetConsoleCursorPosition(h, c);
+		cout << s;
+		c.Y++;
+		SetConsoleCursorPosition(h, c);
+		cout << s;
+		c.Y++;
+		SetConsoleCursorPosition(h, c);
+		cout << s;
+		x++;
+		Sleep(30);
+	}
+
+	SetConsoleTextAttribute(h, 7);
+	c.X = 10, c.Y = 2;
+	SetConsoleCursorPosition(h, c);
+	cout << "LOADING DONE";
+	_getch();
+	system("cls");
+}

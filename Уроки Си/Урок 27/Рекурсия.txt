@@ -1,0 +1,26 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+int Factorial(int number);
+void main()
+{
+	int number = 0;
+	cout << "Enter number: \n";
+	cin >> number;
+	cout <<	Factorial(number);
+
+}
+int Factorial(int number)
+{
+	int res = number;
+	if (number == 0)
+	{
+		return 1;
+	}
+	else if (number < 0)
+	{
+		return -1;
+	}
+	res *= Factorial(--number);
+	return res;
+}

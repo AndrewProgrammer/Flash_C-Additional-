@@ -1,0 +1,13 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	double price = 34.5;
+	cout << "How much money do you have?\n";
+	double money;
+	cin >> money;
+	if (money >= price)
+		cout << "You can buy it!\n";
+	else 
+		cout << "You cant buy it\n";
+}

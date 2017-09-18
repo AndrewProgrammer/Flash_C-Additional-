@@ -1,0 +1,53 @@
+#include<iostream>
+#include <time.h>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	srand(time(0));
+	const int size = 10;
+	int a[size];
+	for (int i = 0; i < size; i++)
+	{
+		a[i] = rand() % 101;
+	}
+	cout << "ћассив с рандомными числами: \n";
+	for (int o = 0; o < size;o++)
+	{
+		cout << a[o] << " ";
+	}
+	cout << endl;
+	int shift;
+	cout << "¬ведите число сдвига\n";
+	cin >> shift;
+	int b;
+	cout << "≈сли вы ведете 1 то сдвиг массива произойдет в право.≈сли вы не наберете 1 то в противном случае сдвиг произойдет в лево: \n";
+	cin >> b;
+	if (b == 1)
+	{
+		for (int k = 0; k < shift; k++)
+		{
+			int temp = a[size - 1];
+			for (int p = size - 1; p > 0; p--)
+			{
+				a[p] = a[p - 1];
+			}
+			a[0] = temp;
+		}
+	}
+	else 
+	{
+		for (int k = 0; k < shift; k++)
+		{
+			int temp = a[0];
+			for (int p = 0; p < size - 1; p++)
+				a[p] = a[p + 1];
+			a[size - 1] = temp;
+		}
+		
+	}
+	cout << "ћассив уже с сдвигом: \n";
+	for (int d = 0; d < size; d++)
+		cout << a[d] << " ";
+	cout << endl;
+}

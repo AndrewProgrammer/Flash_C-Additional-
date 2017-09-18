@@ -1,0 +1,25 @@
+#include <iostream>
+namespace std;
+void main ()
+{
+	float Discount=0.05;
+	float Cost=10.50;
+	int Count=5;
+	float Price;
+	Price=Count*Cost-Count*Cost*Discount;
+	cout<<"Please,pay:"
+	<<Price
+	<<"\n";
+}
+
+
+#include <iostream>
+namespace std;
+void main ()
+{
+	bool Flag;
+	Flag=true;
+	char Symbol='A';
+	const char NewLine='\n';
+	count<<NewLine\\";
+}

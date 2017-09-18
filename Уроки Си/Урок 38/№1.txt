@@ -1,0 +1,26 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+void main() 
+{
+	int Disk = GetLogicalDrives();
+	cout<< Disk <<"\n";
+	char *str = new char[33];
+	_itoa(Disk, str, 2);
+	int len = strlen(str);
+	//cout<<len<<"\n";
+	//cout<<str<<"\n";
+	//printf("%032s\n\n",str);
+
+	char disk = 'A';
+	for (int i = len - 1, j = 0; i >= 0; i--, j++) {
+
+		if (str[i] == '1') {
+			cout << str[i] << " - " << (char)(disk + j) << ":\n";
+		}
+	}
+	system("pause");
+
+}

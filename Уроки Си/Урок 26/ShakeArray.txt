@@ -1,0 +1,49 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+const int size = 20;
+
+void print_array(int ar[]);
+void change(int ar[]);
+void shake_array(int ar[]);
+
+void main()
+{
+	srand(time(0));
+	int ar[size] {};
+	for (size_t i = 0; i < size; i++)
+	{
+		ar[i] = i + 1;
+	}
+	print_array(ar);
+	shake_array(ar);
+	
+	print_array(ar);
+	system("pause");
+}
+void shake_array(int ar[])
+{
+	for (size_t i = 0; i < 50; i++)
+	{
+		change(ar);
+	}
+}
+
+void change(int ar[])
+{
+	int index_1 = rand() % size;
+	int index_2 = rand() % size;
+	int temp = ar[index_1];
+	ar[index_1] = ar[index_2];
+	ar[index_2] = temp;
+}
+
+void print_array(int ar[])
+{
+	for (size_t i = 0; i < size; i++)
+	{
+		cout << ar[i] << "\t";
+	}
+	cout << endl << endl;
+}

@@ -1,0 +1,24 @@
+﻿Build started 16.02.2016 22:30:45.
+     1>Project "H:\ \Программирование на C++\экзамен№3\Bejeweled C++(final)\Bejeweled C++\Bejeweled C++.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         E:\Visual Studio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Box.cpp
+         Box.cpp
+     1>h:\ \программирование на c++\экзамен№3\bejeweled c++(final)\bejeweled c++\box.cpp(32): warning C4309: '=' : truncation of constant value
+       Link:
+         E:\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\ \Программирование на C++\экзамен№3\Bejeweled C++(final)\Debug\Bejeweled C++.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\ \Программирование на C++\экзамен№3\Bejeweled C++(final)\Debug\Bejeweled C++.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\ \Программирование на C++\экзамен№3\Bejeweled C++(final)\Debug\Bejeweled C++.lib" /MACHINE:X86 Debug\Box.obj
+         Debug\CheckBoxcpp.obj
+         Debug\Console.obj
+         Debug\DisplayCombo.obj
+         Debug\FallDownAndGenerateNewJewels.obj
+         Debug\Gems.obj
+         Debug\JustJewels.obj
+         Debug\Main.obj
+         Debug\MainEngineOfGame.obj
+         Debug\ScoreField.obj
+         Debug\Settings.obj
+         Bejeweled C++.vcxproj -> H:\ \Программирование на C++\экзамен№3\Bejeweled C++(final)\Debug\Bejeweled C++.exe
+     1>Done Building Project "H:\ \Программирование на C++\экзамен№3\Bejeweled C++(final)\Bejeweled C++\Bejeweled C++.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:12.01

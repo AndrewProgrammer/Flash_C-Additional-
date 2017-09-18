@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int answer, A, B, RES;
+	do {
+		cout << "Select operation\n";
+		cout << "1- If you want to see sum\n";
+		cout << "2- If you want to see differecne\n";
+		cout << "3- If you want to exit\n";
+		cin >> answer;
+		switch (answer)
+		{
+		case 1 :
+			cout << "Enter first digit:\n";
+			cin >> A;
+			cout << "Enter second digit:\n";
+			cin >> B;
+			RES = A + B;
+			cout << "Answer" << RES << "\n";
+			break;
+		case 2 :
+			cout << "Enter first digit:\n";
+			cin >> A;
+			cout << "Enter second digit:\n";
+			cin >> B;
+			RES = A - B;
+			cout << "Answer" << RES << "\n";
+			break;
+		case 3:
+			cout << "EXIT!!!\n";
+			break;
+		default :
+			cout << "Error! It isn`t correct digit!\n";
+		}
+	} while (answer != 3);
+		cout << "Bye..\n";
+}

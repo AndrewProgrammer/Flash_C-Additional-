@@ -1,0 +1,47 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+int** Create2Array(int rows, int cols)
+{
+	int ** temp = new int*[rows];
+	for (int i = 0; i < rows; i++)
+	{
+		temp[i] = new int[cols];
+	}
+	return temp;
+}
+void Init2array(int**mas, int rows, int cols)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			mas[i][j] = rand() % 11;
+		}
+	}
+}
+void Print2Array(int **mas, int rows, int cols)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			cout << mas[i][j] << "\t";
+		}
+		cout << endl;
+	}
+}
+void main()
+{
+	srand(time(0));
+	int r, c;
+	cout << "Enter rows: " << endl;
+	cin >> r;
+	cout << "Enter cols: " << endl;
+	cin >> c;
+	int**mas = Create2Array(r, c);
+	Init2array(mas, r, c);
+	Print2Array(mas, r, c);
+	system("pause");
+}

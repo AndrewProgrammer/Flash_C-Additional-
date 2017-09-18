@@ -1,0 +1,49 @@
+#include<iostream>
+#include<time.h>
+using namespace std;
+void main()
+{
+	srand(time(0));
+	int min = 0, max = 100;
+	const int size = 5;
+	int a[size][size];
+	int nrow;
+	cout << "Vved kolvo stolbzov" << endl;
+	cin >> nrow;
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			a[y][x] = rand() % (max - min + 1) + min;
+		}
+	}
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			cout.width(3);
+			cout << a[y][x] << ' ';
+		}
+		cout << endl;
+	}
+	for (int y = 0; y < nrow; y++)
+	{
+		int temp = a[y][0];
+		for (int x = 0; x < size - 1; x++)
+		{
+			a[y][x] = a[y][x + 1];
+		}
+		a[y][size - 1] = temp;
+	}
+	cout << endl;
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			cout.width(3);
+			cout << a[y][x] << ' ';
+		}
+		cout << endl;
+	}
+
+}

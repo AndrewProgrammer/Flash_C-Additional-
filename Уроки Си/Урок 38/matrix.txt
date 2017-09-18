@@ -1,0 +1,41 @@
+
+#include <iostream>
+#include <Windows.h>
+#include <time.h>
+using namespace std;
+
+void main() {
+	srand(time(0));
+	system("mode con cols=130 lines=50");
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	const int size = 50;
+	COORD mass[size];
+	for (int i = 0; i<size; i++) {
+		mass[i].X = rand() % 130;
+		mass[i].Y = rand() % 50 - 50;
+	}
+	int count = 0;
+	while (1) {
+		count++;
+		if (count>100) {
+			//system("cls");
+			count = 0;
+		}
+		system("color 02");
+		for (int i = 0; i<size; i++) {
+			mass[i].Y++;
+			if (mass[i].Y>48) {
+				mass[i].Y = 0;
+				mass[i].X = rand() % 130;
+			}
+			if (mass[i].Y >= 0) {
+				//SetConsoleTextAttribute(h,12*16+12);
+				SetConsoleTextAttribute(h, 10);
+				SetConsoleCursorPosition(h, mass[i]);
+				cout << (char)(rand() % 200 + 50);
+
+			}
+		}
+		Sleep(15);
+	}
+}

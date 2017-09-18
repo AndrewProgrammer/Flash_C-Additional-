@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	char choice,choise,answer;
+	cout << "Игра(кто хочет стать милионером)!\n";
+	cout << "1 Вопрос: Какой химический елемент идет после O(оксигена)!\n";
+	cout << "Vedite vash variant otveta A)Br B)Li C)H D) Si E)P \n";
+	cin >> choice;
+	switch (choice)
+	{
+	case 'A':
+		cout << "Не верно!Это не Br!\n";
+		break;
+	case 'B':
+		cout << "Не верно!Это не Li!\n";
+		break;
+	case 'C':
+		cout << "Не верно!Это не H!\n";
+		break;
+	case 'D':
+		cout << "Не верно!Это не Si!\n";
+		break;
+	case 'E':
+		cout << "Верно это P!Идем дальше!!!\n";
+		break;
+	default :
+		cout << "Вы ввели не верный символ и проиграли!!!\n";
+		break;
+	}
+	if ('E')
+	cout << "2 Вопрос:Что это за файл формата aep?\n";
+	cout << "Vash vibor A)Adobe Photoshop B)Adobe After Effects Cs6 C) Cinema4D\n";
+	cin >> choise;
+	switch (choise)
+	{
+	case 'A':
+		cout << "Не верно!\n";
+		break;
+	case 'B':
+		cout << "Верно!!!\n";
+		break;
+	case 'C':
+		cout << "Не верно!\n";
+		break;
+	default :
+		cout << "Не верный символ!!!\n";
+	}
+	if ('B')
+	cout << "3 Вопрос:назовите программу для видеомонтажа\n";
+	cout << "Vash vibor A)Sony Vegas Pro 13 B)Battlelog C) Origin?\n";
+	cin >> answer;
+	switch (answer)
+	{
+	case 'A':
+		cout << "Это верно!\nВы выйграли!!!\n";
+		break;
+	case 'B':
+		cout << "Это не верно!\n";
+		break;
+	case 'C':
+		cout << "Это не верно!\n";
+		break;
+	}
+	cout << "Конец!\n";
+}

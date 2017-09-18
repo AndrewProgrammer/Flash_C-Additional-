@@ -1,0 +1,13 @@
+#include <iostream>
+namepspace std;
+void main(()
+{
+	cout<<"Let`s play!\n";
+	int i;
+	cout<<"Enter a number:";
+	cin>>i;
+	cout<<"I have"
+	<<i+1
+	<<"\n";
+	cout<<"I`m winner!\n";
+}

@@ -1,0 +1,62 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+using namespace std;
+
+void myswap(int * pa, int * pb)
+{
+	int temp=*pa;
+	*pa=*pb;
+	*pb=temp;
+}
+
+void Print(int * a, int size)
+{
+	for(int i=0; i<size; ++i)
+		cout<<*(a++)<<' ';
+}
+
+void main()
+{
+	int a = 10, b = 50;
+	int * p = &a;
+	cout<<p<<endl;
+	*p=20;
+	cout<<a<<endl;
+	p=&b;
+	cout<<*p<<endl;
+	myswap(&a,p);
+	cout<<a<<' '<<b<<endl;
+
+	a=10;
+	p=&a;
+	int ** q = &p;
+
+	int * const cp = &a; //константный указатель Нельзя: cp=&b;
+	cout<<*cp;
+	*cp=20;
+	int const * cp2=&a; //Указатель на константу Нельзя: *cp2=30;
+	cout<<*cp2;
+
+	int const * const cp3 = &a;//константный указатель на константу
+
+	int arr[10]={1,2,3,4,5,6,7,8,9,0};
+	cout<<*arr;
+	int * pp = arr+6;
+	for(int i=0; i<10; ++i)
+	{
+		cout<<*(arr+i)<<' ';
+		//cout<<*pp<<' ';
+		//++pp;
+	}
+	cout<<endl;
+	cout<<pp-arr;
+
+	cout<<*(arr+4); //arr[4]
+	cout<<4[arr]; // *(4+arr)
+	Print(arr,10);
+
+}
+
+

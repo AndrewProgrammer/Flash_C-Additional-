@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+struct date
+{
+	int day, month, year;
+};
+struct user
+{
+	date born;
+	char* name = new char[20];
+};
+struct test
+{
+	int a;
+	char b;
+};
+void main()
+{
+	cout << "Sizeof struct user: " << sizeof user << endl;
+	user admin;
+	admin.born = { 30, 1, 1999 };
+	cout << "Enter your name: \n";
+	cin.getline(admin.name, 19);
+	cout << "Your name is: \n" << admin.name << endl;
+	cout << "Your date born: \n";
+	cout << admin.born.day << "." << admin.born.month << "." << admin.born.year << endl;
+}

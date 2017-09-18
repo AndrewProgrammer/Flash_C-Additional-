@@ -1,0 +1,43 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+
+void main()
+{
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE h_in = GetStdHandle(STD_INPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cc;
+	cc.bVisible = false;
+	cc.dwSize = 100;
+	SetConsoleCursorInfo(h, &cc);
+
+	COORD c;
+	c.X = 1;
+	c.Y = 1;
+	SetConsoleMode(h_in, ENABLE_MOUSE_INPUT);
+	INPUT_RECORD all_events[256];
+	DWORD read_event;
+
+	while (1)
+	{
+		ReadConsoleInput(h_in, all_events, 256, &read_event);
+		for (int i = 0; i < read_event; i++)
+		{
+			SetConsoleCursorPosition(h, c);
+			cout << " ";
+			c.X = all_events[i].Event.MouseEvent.dwMousePosition.X;
+			c.Y = all_events[i].Event.MouseEvent.dwMousePosition.Y;
+			if (c.X > 0-1 && c.X < 75 && c.Y >-1 && c.Y < 75
+				&& all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED
+				)
+			{
+				SetConsoleCursorPosition(h, c);
+				cout << "*";
+			}
+
+		}
+	}
+
+
+	system("pause");
+}

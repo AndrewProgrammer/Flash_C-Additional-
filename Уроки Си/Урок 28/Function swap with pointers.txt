@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+void swapr(int *a, int *b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+void main()
+{
+	int x = 10, y = 20;
+	cout << x << " " << y << endl;
+	swapr(&x, &y);
+	cout << x << " " << y << endl;
+	system("pause");
+}

@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int a[5], sum = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		cin >> a[i];
+		sum += a[i];
+	}
+	cout << sum << endl;
+	for (int v = 0; v < 5; v++)
+	{
+		cout << a[v] << " ";
+	}
+	cout << endl;
+}

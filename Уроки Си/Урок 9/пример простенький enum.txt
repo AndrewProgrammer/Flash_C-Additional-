@@ -1,0 +1,7 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	enum Color { Red, Green, Blue };
+	enum Color { Red = 50, Green = 60, Blue };
+}

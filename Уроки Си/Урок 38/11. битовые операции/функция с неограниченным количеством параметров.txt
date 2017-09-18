@@ -1,0 +1,211 @@
+void Summa(int k,...){
+	int*pk=&k;
+	for(int i=0;i<k;i++){
+		cout<<*(++pk)<<" ";
+	}
+}
+
+void main(){
+	Summa(7,1,2,3,4,5,6,7);
+}
+
+.....................................
+
+void Summa(int k,...){
+	int*pk=&k;
+	while(*pk){
+		cout<<*(pk++)<<" ";
+	}
+}
+
+void main(){
+	Summa(1,2,3,4,5,6,7,0);
+}
+
+.....................................
+
+Константная ссылка может быть инициализирована объектом другого типа
+(если, конечно, существует возможность преобразования одного типа в другой),
+а также безадресной величиной – такой, как литеральная константа. 
+
+	const int &s1=1024;
+	cout<<s1<<"\n";
+
+	double d=500.001;
+	const int &s2=d;
+	cout<<s2<<"\n";
+
+.....................................
+
+директива typedef позволяет задать синоним для встроенного либо пользовательского типа данных. Например:
+
+typedef COORD coord;
+
+.....................................
+
+объединения в языке C подобны структурам, однако в каждый момент времени может использоваться
+(является активным) только один из его компонентов.
+
+        union judas{
+		int age;
+		short rooms;
+		double money;
+		char*name;
+	};
+
+	judas Ismael;
+	cout<<sizeof(Ismael)<<"\n";
+	Ismael.age=50;
+	cout<<Ismael.age<<"\n";
+	Ismael.name=new char[50];
+	strcpy(Ismael.name,"таки да!");
+	cout<<Ismael.name<<"\n";
+	cout<<Ismael.age<<"\n";
+
+	judas Abram={35}; // judas Abram={35,50};
+	cout<<Abram.age<<"\n";
+
+.....................................
+
+объединения используются когда необходимо получить доступ к одним и тем же данным разными способами.
+
+        union tank
+	{
+		struct
+		{
+			int x, y;
+			int fuel;
+		};
+		int t[3];
+	};
+
+	tank t34;
+
+	t34.x = 5;
+	t34.y = 1;
+	t34.fuel = 20;
+
+	cout << t34.t[0] << "\n";
+	cout << t34.t[1] << "\n";
+	cout << t34.t[2] << "\n";
+
+.....................................
+
+инверсия битов.
+
+        int a=50;
+	char*first=new char[100];
+	_itoa(a,first,2);
+	cout<<first<<"\n";
+
+	int b=~a;
+	char*second=new char[100];
+	_itoa(b,second,2);
+	cout<<second<<"\n";
+
+.....................................
+
+битовое и. битовое или. битовое исключающее или.
+
+        int a=50;
+	char*first=new char[100];
+	_itoa(a,first,2);
+	cout<<first<<"\n";
+
+	int b=45;
+	char*second=new char[100];
+	_itoa(b,second,2);
+	cout<<second<<"\n";
+
+	int c=a&b;
+	//int c=a|b;
+	//int c=a^b;
+	char*third=new char[100];
+	_itoa(c,third,2);
+	cout<<third<<"\n";
+
+.....................................
+
+	int a=10;
+	int b=15;
+	a=a^b;
+	b=b^a;
+	a=a^b;
+	cout<<a<<" "<<b<<"\n";
+
+.....................................
+
+побитовый сдвиг.
+
+        int a=50;
+	char*first=new char[100];
+	_itoa(a,first,2);
+	cout<<first<<"\n";
+
+	int b=a<<1;
+	char*second=new char[100];
+	_itoa(b,second,2);
+	cout<<second<<"\n";
+	cout<<b<<"\n";
+	b=a<<2;
+	cout<<b<<"\n";
+	b=a<<3;
+	cout<<b<<"\n";
+
+	int c=a>>1;
+	char*third=new char[100];
+	_itoa(c,third,2);
+	cout<<third<<"\n";
+	cout<<c<<"\n";
+	c=a>>2;
+	cout<<c<<"\n";
+	c=a>>3;
+	cout<<c<<"\n";
+
+.....................................
+
+препроцессор - это программа, которая производит некоторые (иногда весьма значительные)
+манипуляции с первоначальным текстом программы перед тем, как он подвергается компиляции.
+
+        #define Pi 3.14159
+	#define E  2.71284
+	#define E  2.71284
+
+	#define forever for(;;)
+
+	#define begin {
+        #define end }
+
+	#define SQR(X) ((X) * (X)) 
+	#define CUBE(X) (SQR(X)*(X)) 
+	#define ABS(X) (((X) < 0)? -(X) : X)
+
+	#define целое int
+	#define если if
+	#define равно ==
+	#define покажи cout<<
+	#define нс cout<<"\n";
+	#define пнс(X) for(int i=0;i<X;i++) cout<<"\n";
+
+	целое a=5;
+	если(a равно 5) покажи a;
+	пнс(5)
+
+.....................................
+
+перечисления.
+
+        enum state{ON, OFF};
+	enum traffic_lights{STOP, WAIT, GO};
+	enum month{JAN=1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC};
+	enum names{ALEX=22, KIRILL=ALEX-5, OLEG=KIRILL, DIMA=OLEG+1};
+	enum colors{RED=12, GREEN=10, BLUE=GREEN-1, YELLOW=14, WHITE, PINK=13};
+
+.....................................
+
+размер окна.
+
+	system("mode con cols=15 lines=15");
+
+.....................................
+

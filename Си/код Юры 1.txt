@@ -1,0 +1,174 @@
+ 
+ 
+namespace MyTask
+{
+        namespace Subtask
+        {
+                class String
+                {
+                        /*
+                        static int GetMaxLength()
+                        {
+                                return 10000;
+                        }
+                        int GetLength()
+                        {
+                                return _length;
+                        }*/
+                        public static int MaxLength
+                        {
+                                get { return 10000; }
+                        }
+                        public int Length
+                        {
+                                get { return _length; }
+                        }
+                        int _length;
+                }
+ 
+                class TEST
+                {
+                        public ReturnType Name(ParameterType parametername, ...)
+                        {
+ 
+                        }
+                        FieldType _field;
+                        static FieldType _staticField;
+ 
+                        public PropertyType PropertyName
+                        {
+                                [get { return ... ; }]
+                                [set { } ]
+                        }
+ 
+                }
+        }
+ 
+}
+ 
+ 
+namespace other
+{
+        class A
+        {
+                static void Main()
+                {
+                        MyTask.Subtask.String a = new MyTask.Subtask.String();
+                }
+        }
+}
+ 
+ 
+using MyTask.Subtask;
+namespace other
+{
+        class A
+        {
+                static void Main()
+                {
+                        String a = new String();
+                        var max = String.MaxLength;
+                        var l = a.Length;
+                        String.MaxLength = 1324;
+ 
+                }
+        }
+}
+ 
+ 
+////////////////////////
+ 
+using System, System.Console;
+namespace other
+{
+        class A
+        {
+                static void Main()
+                {
+                        string r = Console.ReadLine();
+                        try
+                                int i = int.Parse(r);
+ 
+ 
+                }
+ 
+                public virtual A Clone() { return ... }
+        }
+ 
+        class B : A
+        {
+                override A Clone() { return new B(...); }
+ 
+                void fn()
+                {
+                        Console.WriteLine(this);
+ 
+                        VariableType Name[ = ...];
+                        B instanceOfB = Clone() as B;
+ 
+                        // as в случае, если классы не приводятся, возвращает null
+ 
+                        B b1 = (B)Clone();
+ 
+                        string h = b.ToString();
+ 
+                        double pi = 3.1415;
+                        int piint = (int)pi;
+ 
+                }
+                // implicit
+                public static explicit operator int(B b)
+                {
+                        return b....;
+                }
+        }
+}
+ 
+////////////////////////////////
+ 
+class A
+{
+        static void Main()
+        {
+                ArrayType[] variableName = new ArrayType[ /*elements*/ ];
+ 
+                ArrayType simple = new ArrayType();
+                variableName.Add(simple);
+ 
+                var element = variableName[0];
+                element.Change();
+                variableName[0] = new ArrayType();
+ 
+                var len = variableName.Length;
+                for (int c = 0; c < len; c++)
+                {
+                        element = variableName[c];
+                        element.UseIt();
+                }
+ 
+                foreach (var e in variableName)
+                {
+                        e.UseIt();
+                }
+ 
+                var digits = new double[] { 2.7272, 3.1415, 600, 6 * 10-23, -44};
+ 
+                digits.RemoveAt(0); //
+                digits.Remove(600.0);
+ 
+                digits[0]= 0.0;
+        }
+}
+ 
+/////////////////////////////////////
+ 
+using System;
+class A
+{
+        static void Main()
+        {
+                Random r =  new Random();
+                r.NextInt(0, 100); // [0, 100)
+                r.NextDouble(); // [0.0, 1.0)
+        }
+}

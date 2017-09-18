@@ -1,0 +1,51 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+void MyGetDriveType(char sym)
+{
+	int type = GetDriveTypeA(strcat(&sym, ":\\"));
+	switch (type)
+	{
+	case DRIVE_UNKNOWN:
+		cout << "DRIVE_UNKNOWN" << endl;
+		break;
+	case DRIVE_NO_ROOT_DIR:
+		cout << "DRIVE_NO_ROOT_DIR" << endl;
+		break;
+	case DRIVE_REMOVABLE:
+		cout << "DRIVE_REMOVABLE" << endl;
+		break;
+	case DRIVE_FIXED:
+		cout << "DRIVE_FIXED" << endl;
+		break;
+	case DRIVE_REMOTE:
+		cout << "DRIVE_REMOTE" << endl;
+		break;
+	case DRIVE_CDROM:
+		cout << "DRIVE_CDROM" << endl;
+		break;
+	case DRIVE_RAMDISK:
+		cout << "DRIVE_RAMDISK" << endl;
+		break;
+	}
+}
+void main()
+{
+	unsigned int Disk = GetLogicalDrives();
+	cout << "Number of last name of disk in bites:" << endl;
+	cout << Disk << endl;
+	unsigned int Mask = 1;
+	for (int i = 0; i < 32; i++)
+	{
+		if ((Disk & Mask) == Mask)
+		{
+			cout << char(i + 65) << " - ";
+			MyGetDriveType(i + 65);
+		}
+		Mask <<= 1;
+	}
+	system("pause");
+
+}

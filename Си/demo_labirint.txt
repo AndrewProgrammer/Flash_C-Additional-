@@ -1,0 +1,63 @@
+#include <iostream>
+#include <Windows.h>
+using namespace std;
+enum LAND{
+	BLANK = ' ',
+	WALL = 219,
+	LAVA = 176,
+	WATER = 177,
+	SAND = 178
+};
+enum LAND_COLOR{
+	BLANKc,
+	WALLc = 15,
+	LAVAc = 12,
+	WATERc = 9,
+	SANDc = 14
+};
+
+int labirint[7][7] = {
+	{ WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+	{ WALL, BLANK,BLANK,BLANK,WALL,WALL,SAND},
+	{ WALL, WALL, WALL,BLANK,WALL,LAVA ,SAND},
+	{ WALL, WATER,WATER,BLANK,BLANK,LAVA,WALL},
+	{ WALL, WALL, WALL,BLANK,BLANK,LAVA,WALL},
+	{ WALL, BLANK, BLANK,BLANK,WALL,WATER,WALL },
+	{ WALL, WALL, WALL, WALL, WALL, WALL, WALL }
+};
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+
+void main()
+{
+	for (int y = 0; y < 14; y++)
+	{
+		for (int x = 0; x < 14; x++)
+		{
+			LAND_COLOR l_c;
+			switch (labirint[y/2][x/2])
+			{
+			case BLANK:
+				l_c = BLANKc;
+				break;
+			case WALL:
+				l_c = WALLc;
+				break;
+			case LAVA:
+				l_c = LAVAc;
+				break;
+			case WATER:
+				l_c = WATERc;
+				break;
+			case SAND:
+				l_c = SANDc;
+				break;
+			default:
+				l_c = BLANKc;
+				break;
+			}
+			SetConsoleTextAttribute(h, l_c);
+			cout << (char)labirint[y/2][x/2];
+		}
+		cout << endl;
+	}
+}

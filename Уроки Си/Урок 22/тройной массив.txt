@@ -1,0 +1,20 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	int a[3][2][3] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+	for (int z = 0; z < 3; z++)
+	{
+		for (int y = 0; y < 2; y++)
+		{
+			for (int x = 0; x < 3; x++)
+			{
+				cout.width(3);
+				cout << a[z][y][x];
+			}
+			cout << endl;
+		}
+		cout << "--------------------\n";
+	}
+}

@@ -1,0 +1,269 @@
+#include <iostream>
+#include <conio.h>
+#include <Windows.h>
+using namespace std;
+enum LAND{
+	BLANK = ' ',
+	WALL = 219,
+	LAVA = 176,
+	WATER = 177,
+	SAND = 178,
+	ACID = 182,
+	ACID1 = 205,
+	ACID2 = 186,
+	ACID3 = 201,
+	ACID4 = 187,
+	ACID5 = 191,
+	ACID6 = 192,
+	ACID7 = 188,
+	ACID8 = 200,
+	KR = 253,
+	UP = 179,
+	WAY = 207,
+	GRID = 35,
+	GRID1 = 120,
+	LINE = 196
+};
+enum LAND_COLOR{
+	BLANKc,
+	WALLc = 15,
+	LAVAc = 12,
+	WATERc = 11,
+	SANDc = 14,
+	ACIDc = 10,
+	ACID1c = 15,
+	ACID2c = 15,
+	ACID3c = 15,
+	ACID4c = 15,
+	ACID5c = 15,
+	ACID6c = 15,
+	ACID7c = 15,
+	ACID8c = 15,
+	UPc = 15,
+	WAYc = 15,
+	GRIDc = 10,
+	GRID1c = 14,
+	LINEc = 13
+};
+
+int labirint[14][76] = {
+	{ WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, BLANK, BLANK, BLANK, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL },//1
+	{ WALL, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID2, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID, BLANK, BLANK, BLANK, ACID, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WALL },//2
+	{ WALL, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, BLANK, BLANK, BLANK, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID, BLANK, BLANK, BLANK, ACID, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, WALL },//3
+	{ WALL, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID2, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID2, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WALL },//4
+	{ WALL, LAVA, LAVA, LAVA, LAVA, LAVA, LAVA, BLANK, BLANK, BLANK, ACID8, ACID1, ACID1, BLANK, BLANK, ACID1, ACID1, WAY, ACID1, ACID1, BLANK, BLANK, ACID1, ACID1, ACID7, BLANK, BLANK, BLANK, BLANK, BLANK, GRID, GRID, GRID, GRID, BLANK, BLANK, BLANK, GRID, GRID, GRID, GRID, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WATER, WATER, WATER, WATER, WATER, WATER, WALL },//5
+	{ WALL, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WALL },//6
+	{ BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, BLANK, BLANK, BLANK, BLANK, BLANK, GRID, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, GRID, BLANK, BLANK, BLANK, BLANK, BLANK, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, LINE, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK },//7 - половина
+	{ BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, GRID1, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, GRID1, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, },//8
+	{ WALL, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, GRID1, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, GRID1, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WALL },//9
+	{ WALL, LAVA, LAVA, LAVA, LAVA, LAVA, LAVA, BLANK, BLANK, BLANK, BLANK, ACID3, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID4, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, GRID1, GRID1, GRID1, GRID1, BLANK, GRID1, BLANK, GRID1, GRID1, GRID1, GRID1, BLANK, BLANK, BLANK, BLANK, BLANK, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, ACID1, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WATER, WATER, WATER, WATER, WATER, WATER, WALL },//10
+	{ WALL, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID2, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID8, ACID1, ACID1, ACID1, ACID1, ACID4, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, WALL },//11
+	{ WALL, ACID1, ACID1, ACID4, BLANK, BLANK, BLANK, BLANK, BLANK, ACID1, ACID1, ACID7, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID2, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, SAND, BLANK, BLANK, BLANK, SAND, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, UP, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID3, ACID1, ACID1, WALL },//12
+	{ WALL, BLANK, BLANK, ACID2, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID2, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, SAND, BLANK, BLANK, BLANK, SAND, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, ACID2, BLANK, BLANK, WALL },//13
+	{ WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, BLANK, BLANK, BLANK, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL },//14
+};
+
+void main()
+{
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cci = { sizeof(cci), false };//создаем объект, содержащий настройки дл€ хендла с указанием не отображать курсор
+	SetConsoleCursorInfo(h, &cci);
+	COORD c = { 0, 0 };//объект дл€ хранени€ координат
+	SetConsoleCursorPosition(h, c);
+	int color_text = 0, color_fon = 0;
+	char smile = 123;
+	bool flag = true;
+	int dx = 0, dy = 0;
+	for (int y = 0; y < 14; y++)
+	{
+		for (int x = 0; x < 76; x++)
+		{
+			LAND_COLOR l_c;
+			switch (labirint[y][x])
+			{
+			case BLANK:
+				l_c = BLANKc;
+				break;
+			case WALL:
+				l_c = WALLc;
+				break;
+			case LAVA:
+				l_c = LAVAc;
+				break;
+			case WATER:
+				l_c = WATERc;
+				break;
+			case SAND:
+				l_c = SANDc;
+				break;
+			case ACID:
+				l_c = ACIDc;
+				break;
+			case ACID1:
+				l_c = ACID1c;
+				break;
+			case ACID2:
+				l_c = ACID2c;
+				break;
+			case ACID3:
+				l_c = ACID3c;
+				break;
+			case ACID4:
+				l_c = ACID4c;
+				break;
+			case ACID5:
+			case WAY:
+				l_c = WAYc;
+				break;
+				l_c = ACID5c;
+				break;
+			case ACID6:
+				l_c = ACID6c;
+				break;
+			case ACID7:
+				l_c = ACID7c;
+				break;
+			case ACID8:
+				l_c = ACID8c;
+				break;
+			case UP:
+				l_c = UPc;
+				break;
+			case GRID:
+				l_c = GRIDc;
+				break;
+			case GRID1:
+				l_c = GRID1c;
+				break;
+			case LINE:
+				l_c = LINEc;
+				break;
+			default:
+				l_c = BLANKc;
+				break;
+			}
+			SetConsoleTextAttribute(h, l_c);
+			cout << (char)labirint[y][x];
+		}
+		cout << endl;
+	}
+	c = { 38, 10 };
+	SetConsoleCursorPosition(h, c);
+	SetConsoleTextAttribute(h, 15);
+	cout << smile;
+	do//начинаем цикл с пост-условием
+	{
+		int k = _getch();//считываем код нажатой клавиши
+		if (k == 0 || k == 224)//если была нажата управл€юща€ клавиша
+			k = _getch();//то считываем второй код из буфера
+		switch (k)//отправл€ем результат дл€ управлени€ оператором выбора
+		{
+		case 'S':
+		case 's':
+		case 80://если была нажата клавиша вниз
+			dy = 1;//то приращение по оси ординат будет положительным
+			dx = 0;//по оси абсцисс приращение нулевое
+			break;
+		case 'W':
+		case 'w':
+		case 72://если вверх
+			dy = -1;//аналогично согласно геометрической логике
+			dx = 0;
+			break;
+		case 'A':
+		case 'a':
+		case 75://есди влево
+			dy = 0;
+			dx = -1;
+			break;
+		case 'D':
+		case 'd':
+		case 77://если вправо
+			dy = 0;
+			dx = 1;
+			break;
+		case 27://если была нажата клавиша ESC
+			flag = false;//устанавливаем флажок на Ћќ∆№
+			//break пропускаем специально, чтоб сработал default
+		default:
+			dx = dy = 0;//если была нажата люба€ ина€ клавиша, то приращени€ равны нулю
+		}
+		int X = c.X + dx;
+		int Y = c.Y + dy;
+		if (labirint[Y][X] != WALL)
+		{
+			SetConsoleCursorPosition(h, c);
+			LAND_COLOR l_c;
+			switch (labirint[c.Y][c.X])
+			{
+			case BLANK:
+				l_c = BLANKc;
+				break;
+			case WALL:
+				l_c = WALLc;
+				break;
+			case LAVA:
+				l_c = LAVAc;
+				break;
+			case WATER:
+				l_c = WATERc;
+				break;
+			case SAND:
+				l_c = SANDc;
+				break;
+			case ACID:
+				l_c = ACIDc;
+				break;
+			case ACID1:
+				l_c = ACID1c;
+				break;
+			case ACID2:
+				l_c = ACID2c;
+				break;
+			case ACID3:
+				l_c = ACID3c;
+				break;
+			case ACID4:
+				l_c = ACID4c;
+				break;
+			case ACID5:
+			case WAY:
+				l_c = WAYc;
+				break;
+				l_c = ACID5c;
+				break;
+			case ACID6:
+				l_c = ACID6c;
+				break;
+			case ACID7:
+				l_c = ACID7c;
+				break;
+			case ACID8:
+				l_c = ACID8c;
+				break;
+			case UP:
+				l_c = UPc;
+				break;
+			case GRID:
+				l_c = GRIDc;
+				break;
+			case GRID1:
+				l_c = GRID1c;
+				break;
+			case LINE:
+				l_c = LINEc;
+				break;
+			default:
+				l_c = BLANKc;
+				break;
+			}
+			SetConsoleTextAttribute(h, l_c);
+			cout << (char)labirint[c.Y][c.X];
+			c = { X, Y };
+			SetConsoleCursorPosition(h, c);
+			SetConsoleTextAttribute(h, 15);
+			cout << smile;
+		}
+	} while (flag);//выводим символ в новой позиции
+	
+}

@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+struct pryam
+{
+	double a, b;
+	int point_x, point_y;
+};
+void PrintPryam(double visota, double dlina)
+{
+	for (int a = 0; a < visota; a++)
+	{
+		for (int i = 0; i < dlina; i++)
+			if (a == 0 || i == 0 || a == visota - 1 || i == dlina - 1)
+				cout << '*';
+			else
+				cout << ' ';
+		cout << endl;
+	}
+}
+void check(pryam x)
+{
+	if (x.point_x <= x.a && x.point_y <= x.b)
+	{
+		cout << "Точка находить в прямоугольнике";
+	}
+	else cout << "Точка не находиться в прямоугольнике";
+}
+void main()
+{
+	setlocale(0, "ru");
+	pryam point;
+	cout << "Введите ширину и высоту прямоугольника\n";
+	cin >> point.a;
+	cin >> point.b;
+	PrintPryam(point.a, point.b);
+	cout << endl;
+	cout << "Введите точку:\n";
+	cin >> point.point_x;
+	cin >> point.point_y;
+	check(point);
+}

@@ -1,0 +1,22 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	int a[3][5] = { { 0, 12, 0, 9, 0 }, { 15, 10, 0, 12, 0 }, { 10, 0, 10, 11, 7 } };
+	int day, para;
+	cout << "¬ведите номер пары: \n";
+	cin >> para;
+	if (para > 3 || para <= 0)
+	{
+		cout << "Error!!!";
+	}
+	cout << "¬ведите день недели: \n";
+	cin >> day;
+	if (day > 5 || day <= 0)
+	{
+		cout << "Error!!!";
+	}
+	cout << a[para - 1][day - 1] << endl;
+}

@@ -1,0 +1,45 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+int a, b;
+bool input()
+{
+	cout << "¬ведите 2 значение дл€ подсчета сочетани€ a и b:\n";
+	if (!(cin >> a >> b))
+		return false;
+	else if (a < 0 || b < 0)
+		return false;
+	else
+		return true;
+}
+double fact(int l)
+{
+	double  result = 1;
+	for (int i = 1; i <= l; i++)
+	{
+		result *= i;
+	}
+	return result;
+}
+double soch()
+{
+	double  result;
+	double numerator = fact(a);
+	double denom = fact(a - b)*fact(b);
+	result = numerator / denom;
+	return result;
+
+}
+void print(double  s)
+{
+	cout << "S из " << a << " по " << b << " = " << s << endl;
+
+}
+void main()
+{
+	setlocale(0, "ru");
+	while ( !input() ) 
+		system("cls");
+	double  s = soch();
+	print(s);
+}

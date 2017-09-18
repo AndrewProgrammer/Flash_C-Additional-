@@ -1,0 +1,116 @@
+5 - главных шагов для запуска простого приложения:
+1) Описать класс окна //WNDCLASSEX - структура( которая содержит поля нашего класса)
+WNDCLASSEX windowClass = {};//Структура с 0 значениями
+windowClass.cbSize = sizeof(windowClass); //Очень важное поле - размер структуры(ОБЯЗАТЕЛЬНО К ЗАПОЛНЕНИЮ!)
+windowClass.hbrBackground = static_cast<HBRUSH>(GetStockObject(LTGRAY_BRUSH)); // Заполнение заднего фона
+windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW); // Загрузка стандартного курсора.//Стандартный курсор который будет отображаться на экране
+windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW); // Загрузка стандартного курсора.
+    windowClass.hIcon = LoadIcon(nullptr, IDI_APPLICATION); // Загрузка стандатной иконки.
+    windowClass.hIconSm = LoadIcon(nullptr, IDI_APPLICATION); // Загрузка стандатной иконки.//Sm это маленька иконка справа
+    windowClass.hInstance = instance; // Дескриптор данного приложения.
+    windowClass.lpfnWndProc = WindowProcedure; // Адрес оконной процедуры.//Указатель на функцию которая представляет из себя оконную процедуру
+    windowClass.lpszClassName = className; // Имя класса окна.//Указатель на строку имя класса
+    windowClass.lpszMenuName = nullptr; // Приложение не содержит меню.
+    windowClass.style = CS_HREDRAW | CS_VREDRAW; // CS (Class Style) - стиль класса окна.//Окно нужно изменить сразу же после того как мы что то сделали с рахмером окна
+WndClass.style
+2)Регистрация в системе:  if (RegisterClassEx(&windowClass))
+3)Для создания ОКНА: CreateWindowEx
+1 - Стиль окна.
+2 - Класс окна
+3 - Caption - Заголовк окна
+4 -  WS_OVERLAPPEDWINDOW - флаг в котором много других флагов отвечающих за окно(БОЛЬШОЕ ОКНО)
+5         CW_USEDEFAULT, // X-координата верхнего левого угла.
+6            CW_USEDEFAULT, // Y-координата верхнего левого угла.
+7            CW_USEDEFAULT, // Ширина окна.
+8            CW_USEDEFAULT, // Высота окна.
+9            nullptr, // Дескриптор родительского окна.
+10            nullptr, // Дескриптор меню окна.
+11           instance, // Дескриптор приложения, создавшего окно.
+12            nullptr // Указатель на область данных приложения.
+4) Показать окно на экран окно
+ShowWindow(windows, showCommand); // дескриптор окна , и стиль как показывать окно
+UpdateWindow(window); //Обновляем окно
+5)Запуск цикла обработки сообщений
+GetMessage - извлечь сообщение из очереди//1 - адрес экземпляра MSG , извелкать сообщение(из какого окна), диапозон: 3 - мин, 4 - макс. Всегда возвращает true и если мы передаем WM_QUIT
+TranslateMessage(&message); // Когда приходит нажатие клавиши то мы смотрим реально какой там символ
+DispatchMessage(&message);//Какая определенная процедура связанная с нашим классом значения(отправка конечному окну).Если нет смс - то ждем когда придет смс 
+WM_MOUSEMOVE:
+wParam - отвечают за было ли что то нажато по мимо мышки
+lParam -  y - high, x - low.
+HIWORD(DWORD) // Возращает WORD
+LOWORD(DWORD) //
+GET_X_LPARAM(#include <WindowsX.h>)//Безнаковое число
+GET_Y_LPARAM(#include <WindowsX.h>)//Безнаковое число
+WM_LBUTTONDOWN:
+нажатие левой кнопки
+WM_RBUTTONDOWN:
+нажатие правой кнопки
+WM_MBUTTONDOWN:
+нажатие средней кнопки
+WM_LBUTTONUP:
+отжатие левой кнопки
+WM_RBUTTONUP:
+отжатие правой кнопки
+WM_MBUTTONUP:
+отжатие средней кнопки
+WM_LBUTTONDBLCLK //(нужно подключить  CS_DBLCLKS)
+WM_MOUSEWHEEL //(колесико) wParam(High(хранится 120, и -120 в другую сторону))
+Функции для взаимодействия с заголовком окна: 
+GetWindowText//Посмотреть как устроены
+GetWindowTextLenght//Посмотреть как устроены
+SetWindowText // Тип HWND hWnd //Дескриптор окна, и наш текст "Hello");
+Структура типа POINT - координата // Посмотреть на MSDN
+Структура типа RECT - 4 поля (Left,Right,Top, Bottom) //
+Функция для получения клиентской области окна и размера этого окна:
+Rect r;
+GetWindowRect(wnd,&r); //Получения нашего окна прямо на нашем рабочем столе
+GetClientRect(wnd,& r); //Возвращает клиенсткую область относительно рабочего стола
+-------------------------------------------------------------
+
+
+
+LRESULT CALLBACK WindowProcedure(HWND window, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    LRESULT result = 0;
+
+    switch (message)
+    {
+        case WM_DESTROY: // Сообщение о завершении программы.
+            PostQuitMessage(0); // Отправка сообщения WM_QUIT.
+            break;
+        default:
+            // Все сообщения, которые не обрабатываются в данной оконной функции направляются обратно Windows для обработки по умолчанию.
+            result = DefWindowProc(window, message, wParam, lParam);
+            break;
+    }
+
+    return result;
+}
+LRESULT - результат сообщения(0 - обработка прошла успешно) 
+CALLBACK -  функция обратного вызова
+Произвольное название
+Сигнатура:
+HWND window, UINT message, WPARAM wParam, LPARAM lParam:
+
+HWND windows - наше главное окно(дескриптор окна)
+UINT message - наше сообщение
+WPARAM wParam - 4 byte информации специфичные для этого смс.Дополнительная информация о сообщении.
+LPARAM lParam - 4 byte информации специфичные для этого смс.Дополнительная информация о сообщении.
+
+case WM_CLOSE://Можно описать самому что произойдет при закрытии.
+-------------------------------------------------------------
+Венгерская анотация - в ней кодируется смысл наших названий.
+cb - это поле используется как количество байт
+bInhavit - булевский флаг ( в переводе как наследовать ли?)
+i - применяется в качестве индексов
+n - количевство чего либо
+u - без знаковое число.
+------------------------------------------------------------
+sz - (char szName[10]; - пример) // string zeroterminated
+psz - pointer string zeroterminated
+pcsz - pointer const string zeroterminated
+p - pointer(16 bit).
+lp - long pointer (32 bit).
+lpfn - long pointer function
+h - handle //дескриптор приложения
+------------------------------------------------------------

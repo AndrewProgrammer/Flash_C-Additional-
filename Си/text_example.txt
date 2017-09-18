@@ -1,0 +1,63 @@
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
+using namespace std;
+
+void main()
+{
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);//создаем объект, содержащий информацию о потоке вывода (хендл)
+	CONSOLE_CURSOR_INFO cci = { sizeof(cci), false };//создаем объект, содержащий настройки дл€ хендла с указанием не отображать курсор
+	SetConsoleCursorInfo(h, &cci);
+
+	COORD c = { 5, 5 };
+	bool flag = true;
+	int color_text = 0, color_fon=0;
+	
+	do
+	{
+		SetConsoleCursorPosition(h, c);
+		cout << "HELLO WORLD!";
+		int k = _getch();//считываем код нажатой клавиши
+		if (k == 0 || k == 224)//если была нажата управл€юща€ клавиша
+			k = _getch();//то считываем второй код из буфера
+		switch (k)//отправл€ем результат дл€ управлени€ оператором выбора
+		{
+		
+		case 'S':
+		case 's':
+		case 80://если была нажата клавиша вниз
+			color_text--;
+			break;
+		case 'W':
+		case 'w':
+		case 72://если вверх
+			color_text++;
+			break;
+		case 'A':
+		case 'a':
+		case 75://есди влево
+			color_fon--;
+			break;
+		case 'D':
+		case 'd':
+		case 77://если вправо
+			color_fon++;
+			break;
+		case 27://если была нажата клавиша ESC
+			flag = false;//устанавливаем флажок на Ћќ∆№
+			//break пропускаем специально, чтоб сработал default			
+		}
+		if (color_fon < 0)
+			color_fon = 0;
+		else if (color_fon > 15)
+			color_fon = 15;
+		if (color_text < 0)
+			color_text = 0;
+		else if (color_text > 15)
+			color_text = 15;
+
+		SetConsoleTextAttribute(h, color_fon * 16 + color_text);
+		
+	} while (flag);
+}
+

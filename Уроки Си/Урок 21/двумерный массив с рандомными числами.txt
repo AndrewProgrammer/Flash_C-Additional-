@@ -1,0 +1,27 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	const int height = 5, width = 7;
+	int a[height][width];
+	srand(time(0));
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			a[y][x] = rand() % 101;
+		}
+	}
+	for (int j = 0; j < height; j++)
+	{
+		for (int k = 0; k < width; k++)
+		{
+			cout.width(4);
+			cout << a[j][k];
+		}
+		cout << endl;
+	}
+
+}

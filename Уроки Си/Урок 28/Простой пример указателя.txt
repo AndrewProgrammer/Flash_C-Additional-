@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int a = 34;
+	int *ptra = &a;
+	int y = *ptra + 1;
+	++*ptra;
+	*ptra = 0;
+	*ptra += 34;
+	int *py = ptra;
+	cout << a << endl;
+	cout << &a << endl;
+	cout << ptra << endl;
+	cout << *ptra << endl;
+	cout << y << endl;
+	cout << *py << endl;
+	system("pause");
+}

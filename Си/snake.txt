@@ -1,0 +1,52 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+using namespace std;
+
+void main()
+{
+	const int length=5, width=30,height=20;
+	int x[length]={1,2,3,4,5};
+	int y[length]={1,1,1,1,1};
+	int dx=1,dy=0,c;
+	do{
+		do{
+			system("cls");
+			for(int i=0; i<=height; ++i)
+			{
+				for(int j=0; j<=width; ++j)
+				{
+					int k;
+					for(k=0; k<length; ++k)
+						if(i==y[k]&&j==x[k])
+							break;
+					if(k<length)
+						cout<<'*';
+					else if(i==0||j==0||i==height||j==width)
+						cout<<char(0xdb);
+					else cout<<' ';
+				}
+				cout<<endl;
+			}
+			for(int i=0; i<length-1; ++i)
+			{
+				x[i]=x[i+1];
+				y[i]=y[i+1];
+			}
+			x[length-1]+=dx;
+			y[length-1]+=dy;
+			Sleep(100);
+		}while(!_kbhit());
+		c=_getch();
+		if(c==0||c==224)
+			c=_getch();
+		switch(c)
+		{
+		case 75: dx=-1; dy=0; break;
+		case 77: dx=1; dy=0; break;
+		case 72: dy=-1; dx=0; break;
+		case 80: dy=1; dx=0; break;
+		}
+	}while(1);
+}

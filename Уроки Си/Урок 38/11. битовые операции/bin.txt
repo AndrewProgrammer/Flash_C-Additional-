@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+void Bin(int digit, int radix=2){
+	char*res=new char[100];
+	itoa(digit,res,radix);
+	printf("%32s\n",res);
+	delete[]res;
+}
+
+void main(){
+	int a=149; // 10010101
+	int b=134; // 10000110
+
+	Bin(a);
+	Bin(b);
+	Bin(a&b);
+	Bin(a|b);
+	Bin(a^b);
+	Bin(~a);
+	Bin(a>>1);
+	Bin(a>>2);
+	Bin(a>>3);
+	Bin(a>>4);
+	Bin(a<<1);
+	Bin(a<<2);
+	Bin(a<<3);
+	Bin(a<<4);
+}

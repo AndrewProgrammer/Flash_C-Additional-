@@ -1,0 +1,212 @@
+Value: int, doublr, float, long, short, byte, char, Guid
+ 
+struct Guid {
+        int A;
+        int B;
+        byte C...;
+}
+ 
+ 
+int a; /*4 bytes*/
+Guid b; /* 16 b */
+ 
+ 
+Reference: string, object, arrays, interface, FileReader, FileWriter
+ 
+RAM[ ourArray ]
+ 
+string[] arr; /* 4 or 8 b */ ссылаетс€ на ourArray
+string[] b = arr;
+// arr[0] == "hello"
+ 
+b[0] = "world";
+// arr[0] == "world"
+ 
+class ObjectGuid {
+        int A;
+        int B;
+        byte C...;
+}
+ 
+ 
+Guid a = new Guid();
+ObjectGuid b = new ObjectGuid();
+Guid c = a;
+ObjectGuid d = b;
+c.A = 10;
+d.A = 10;
+ 
+/////
+// a.A = 0
+// b.A = 10
+// c.A = 10
+// d.A = 10
+ 
+ 
+ 
+//// SCOPE
+ 
+ 
+class Sample
+{
+        void Gogogo()
+        {
+                q = 10;
+                w = "456";
+                string e;
+                if (condition)
+                {
+                        e = Console.ReadLine();
+                        int r = 10;
+                }
+                else
+                {
+                        e = "default";
+                        int r = 11;
+                }
+                string a = "1";
+                for (; a.Length < 100; a = a + "0")
+                                ;
+                Console.WriteLine(a);
+        }
+ 
+        static void Main()
+        {
+                w = "123";
+                new A().Gogogo();
+        }
+ 
+        int q;
+        static string w;
+}
+ 
+ 
+/////////////// STATEMENTS
+ 
+class QWERTY {
+        static void Main()
+        {
+                int a = ...;
+                string b;
+                if (a % 2 == 0) {
+                        b = "„ет";          
+                } else {
+                        b = "нечет";
+                }
+ 
+                if (a >= 0 && a <= 100)
+                {
+ 
+                }
+ 
+                if (a < 0 || a > 100)
+                {
+ 
+                }
+ 
+                if ((a >= 0 && a <= 100) || a == 1000)
+                [
+                ]
+ 
+                if (a != 100)
+                                if (a != 50)
+                                                if (a != 25) Console.WriteLine("");
+                else
+                                Console.WriteLine("100");
+ 
+ 
+                for (начальное«начение; условие; шаг)
+                {
+ 
+                }
+ 
+                int[] arr;
+                foreach (int i in arr){
+ 
+                }
+ 
+                for (начальное«начение; условие; шаг)
+                {
+                                ...;
+                        if (...)
+                         break;  // ѕродолжит выполнение на строке 136
+                        ....;
+                }
+ 
+                for (начальное«начение; условие; шаг)
+                {
+                                ...;
+                        if (...)
+                         continue;  // ѕродолжит выполнение на строке 137 на шаг, потом на условие
+                        ....;
+                }
+        }
+}
+ 
+///// methods
+ 
+class QWERTY {
+ 
+        double[] GetRandomArray()
+        {
+        double[] result = new double[_elements];
+        Random r = new Random();
+        for (int c = 0; c < result.Length; c++)
+                        result[c] = r.NextDouble();
+        return result;
+        }
+ 
+        static void Main()
+        {
+                new QWERTY().dmain();
+ 
+        }
+ 
+        static IEnumerable<long> Factorials()
+        {
+                long value = 1;
+                for (int c = 1; value >= 0; c++, value *= c)
+                {
+                        yield return value;
+                        ///
+                }
+                // yield break;
+        }
+ 
+                delegate double MathLike(double d);
+                delegate bool Predicate<T>(T);
+ 
+        double test(double i)
+        {
+                return i * 2;
+        }
+        int _elements;
+        void dmain()
+        {
+        MathLike = test;
+        MathLike(0); // 0
+                _elements = 100;
+ 
+                var f = Factorials();
+                foreach (long l in Factorials())
+                                Console.WriteLine(l);
+ 
+ 
+                int p = 10;
+ 
+                int[] arr;
+                int count;
+                for (int c = 0; c < arr.Length; c++)
+                                if (__arr[c] > 0__)
+                                                count++;
+ 
+                arr.Count(y => y > p);
+ 
+                ObjectGuid[] arr;
+                arr.Sort( (ObjectGuid l, ObjectGuid r) => l.A <=> r.A);
+ 
+                arr.OrderBy(e => e.A).ThenBy(e => e.B)...
+        }
+ 
+ 
+}

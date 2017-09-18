@@ -1,0 +1,38 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	srand(time(0));
+	int b[5][5], min = 0, max = 20;
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			b[y][x] = rand() % (max - min + 1) + min;
+		}
+	}
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			cout.width(5);
+			cout << b[y][x];
+		}
+		cout << endl;
+	}
+	int min1 = b[0][0];
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			if (min1 > b[y][x])
+			{
+				min1 = b[y][x];
+			}
+		}
+		cout << endl;
+	}
+	cout << min1 << endl;
+}

@@ -1,0 +1,17 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	int max, min;
+	cout << "—оздать диапозон от максимального до минимального\n¬ведите максимальное число диапозона и минимальное\n";
+	cin >> max >> min;
+	srand(time(0));
+	rand();
+	for (int i = 0; i < 10; i++)
+	{
+		int a = rand() % (max - min + 1) + min;
+		cout << a << endl;
+	}
+}

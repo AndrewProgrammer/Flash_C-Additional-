@@ -1,0 +1,39 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	const int size = 20;
+	int a[size],b[size],c[size];
+	int sum = 0;
+	srand(time(0));
+	rand();
+	for (int k = 0; k < size; k++)
+	{
+		a[k] = rand() % 101;
+	}
+	cout << "1Массив с рандомными числами: \n";
+	for (int j = 0; j < size; j++)
+	{
+		cout << a[j] << ' ';
+	}
+	rand();
+	for (int l = 0; l < size; l++)
+	{
+		b[l] = rand() % 101;
+	}
+	cout << endl;
+	cout << "2Массив с рандомными числами: \n";
+	for (int d = 0; d < size; d++)
+	{
+		cout << b[d] << ' ';
+	}
+	cout << endl;
+	cout << "3массив это сумма первого и второго массива: \n";
+	for (int v = 0; v < size; v++)
+	{
+		c[v] = a[v] + b[v];
+		cout << v[c] << ' ';
+	}
+}

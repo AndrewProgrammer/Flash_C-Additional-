@@ -1,0 +1,56 @@
+#include <iostream>
+#include <time.h>
+
+using namespace std;
+int simple_array(int a, int ARR[]);
+bool is_simple(int);
+void main()
+{
+	srand(time(0));
+	const int size = 10;
+	int ARR[size]{};
+	for (int i = 0;i < size;i++)
+	{
+		ARR[i] = rand() % 11;
+		cout << ARR[i];
+	/*	if (is_simple(ARR[i]))
+			cout << " - ";*/
+		cout << endl;
+	}
+	cout << endl << endl;
+
+	cout << simple_array(size, ARR) << endl;;
+}
+
+int simple_array(int a, int ARR[])
+{
+	int count_simp = 0;
+	for (int i = 0; i < a; i++)
+	{
+		if (is_simple(ARR[i]))
+			count_simp++;
+	}	
+	return count_simp;
+}
+
+
+bool is_simple(int index)
+{
+	/*if (index == 0 || index == 1)  в случае если 0 и 1 не считаються простыми.
+		return false;*/
+	for (int i = 2;i < index;i++)
+	{
+		if (index%i == 0)
+			return false;
+	}
+	return true;
+}
+
+
+
+
+
+
+
+
+

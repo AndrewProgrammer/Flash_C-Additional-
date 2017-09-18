@@ -1,0 +1,11 @@
+﻿Build started 15.03.2016 18:36:54.
+     1>Project "E:\ \Программирование на C++\Примеры\WinAPI\Урок 9\8. Элементы управления\7. Создание элемента управления Edit Control\Создание элемента управления Edit Control\Создание элемента управления Edit Control.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W4 /WX /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt WinMain.cpp
+         WinMain.cpp
+     1>e:\ \программирование на c++\примеры\winapi\урок 9\8. элементы управления\7. создание элемента управления edit control\создание элемента управления edit control\resource.h : fatal error C1081: 'e:\В \РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ РЅР° c++\РїСЂРёРјРµСЂС‹\winapi\СѓСЂРѕРє 9\8. СЌР»РµРјРµРЅС‚С‹ СѓРїСЂР°РІР»РµРЅРёСЏ\7. СЃРѕР·РґР°РЅРёРµ СЌР»РµРјРµРЅС‚Р° СѓРїСЂР°РІР»РµРЅРёСЏ edit control\СЃРѕР·РґР°РЅРёРµ СЌР»РµРјРµРЅС‚Р° СѓРїСЂР°РІР»РµРЅРёСЏ edit control\resource.h': file name too long
+     1>Done Building Project "E:\ \Программирование на C++\Примеры\WinAPI\Урок 9\8. Элементы управления\7. Создание элемента управления Edit Control\Создание элемента управления Edit Control\Создание элемента управления Edit Control.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.97

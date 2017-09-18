@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+struct Person
+{
+	char* name = new char[51];
+	int year;
+	char* pol = new char[21];
+	double height, weight;
+	char* prof = new char[101];
+	double salary;
+	int check;
+};
+void Input(Person people)
+{
+	cout << "Enter your FIO: \n";
+	cin.getline(people.name, 50);
+	cout << "Enter your year of birthday: \n";
+	cin >> people.year;
+	cout << "Enter your sex(statement): \n";
+	cin.getline(people.pol, 20);
+	cout << "Enter your height and weight: \n";
+	cin >> people.height >> people.weight;
+	cout << "Enter your profession: \n";
+	cin.getline(people.prof, 100);
+	cout << "Enter your salary($): \n";
+	cin >> people.salary;
+	cout << "Do you often attend Church per week: \n";
+	cin >> people.check;
+}
+void PrintBio(Person people)
+{
+	cout << "Your BIO: \n";
+	cout << "Your FIO:" << people.name << endl;
+	cout << "Your year of birhday:" << people.year << endl;
+	cout << "Your sex(statement): " << people.pol << endl;
+	cout << "Your heigt: " << people.height << " and your weight: " << people.weight << endl;
+	cout << "Your prof: " << people.prof << endl;
+	cout << "Your Salary: " << people.salary << endl;
+	cout << "You usually visit Church " << people.check << " per week" << endl;
+	if (people.check <= 1 && people.salary >= 5000)
+	{
+		cout << "You are sucessful person! \n";
+	}
+	else if (people.check <= 4 && people.salary >= 5000)
+	{
+		cout << "You are very intelegent person! \n";
+	}
+	else if (people.check <= 4 && people.salary <= 2000)
+	{
+		cout << "You are very polite person! \n";
+	}
+}
+void main()
+{
+	Person people;
+	Input(people);
+	PrintBio(people);
+}

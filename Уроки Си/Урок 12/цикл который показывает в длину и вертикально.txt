@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	int a, b;
+	cout << "Введите длину\n\n";
+	cin >> a;
+	cout << "Вертикально '|' или горизонтально '-'";
+	cin >> b;
+	if (b == '|')
+	{
+		while (a--)
+			cout << '*' << endl;
+	}
+	else if (b == '-')
+	{
+		while (a--)
+			cout << '*';
+	}
+	else cout << "Ошибка!n";
+}

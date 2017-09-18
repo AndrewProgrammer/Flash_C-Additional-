@@ -1,0 +1,95 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+
+using namespace std;
+
+
+void SetField(int field[][4], int size)
+{
+	int k=0;
+	for(int i=0; i<size; ++i)
+	{
+		for(int j=0; j<size; ++j)
+		{
+			field[i][j]=++k;
+		}
+	}
+}
+
+void PrintField(int field[][4], int size, int x, int y)
+{
+	COORD c={0,0};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),c);
+	for(int i=0; i<=size*2; ++i)
+	{
+		for(int j=0; j<=size*3; ++j)
+		{
+			if((x*3+1==j||x*3+2==j)&&(i==y*2||i==y*2+2))
+				cout<<char(0xcd);
+			else if(y*2+1==i&&(j==x*3||j==x*3+3))
+				cout<<char(0xba);
+			else if(i==0&&j==0)
+				cout<<char(0xda);
+			else if(i==0&&j==size*3)
+				cout<<char(0xbf);
+			else if(j==0&&i==size*2)
+				cout<<char(0xc0);
+			else if(i==size*2&&j==size*3)
+				cout<<char(0xd9);
+			else if(i==0&&j%3==0)
+				cout<<char(0xc2);
+			else if(i==size*2&&j%3==0)
+				cout<<char(0xc1);
+			else if(j==0&&i%2==0)
+				cout<<char(0xc3);
+			else if(j==size*3&&i%2==0)
+				cout<<char(0xb4);
+			else if(i%2==0&&j%3==0)
+				cout<<char(0xc5);
+			else if(i%2==0)
+				cout<<char(0xc4);
+			else if(j%3==0)
+				cout<<char(0xb3);
+			else if(field[i/2][j/3]>0&&field[i/2][j/3]<16&&j%3==1)
+			{
+				if(field[i/2][j/3]<10)
+					cout<<field[i/2][j/3]<<' ';
+				else
+					cout<<field[i/2][j/3];
+			}else if(field[i/2][j/3]<0||j%3!=2) cout<<" ";
+			else if(field[i/2][j/3]==16) cout<<" ";
+			
+		}
+		cout<<endl;
+	}	
+}
+
+void HideField(int field[][4], int size)
+{
+	for(int i=0; i<size; ++i)
+	{
+		for(int j=0; j<size; ++j)
+		{
+			field[i][j]*=-1;
+		}
+	}
+}
+
+void InitGame(int field[][4], int size)
+{
+	SetField(field,size);
+	PrintField(field,size,1,1);
+	Sleep(2000);
+	HideField(field,size);
+}
+void main()
+{
+	const int size=4;
+	int c;
+	int field[size][size];
+	system("cls");
+	SetField(field,size);
+	PrintField(field,size,1,1);
+}

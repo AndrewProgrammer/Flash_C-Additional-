@@ -1,0 +1,17 @@
+#icnlude <iostream>
+namespace std;
+void main()
+{
+	float Discount=0.05;
+	float Cost=10.50;
+	cout<<"What`s the cost?\n";
+	cin>>Cost;
+	int Count=5;
+	cout<<"How much it cost?\n";
+	cin>>Count;
+	float Price;
+	Price=Count*Cost-Count*Cost*Discount;
+	cout<<"Please,pay:"
+	<<Price
+	<<"\n";
+}

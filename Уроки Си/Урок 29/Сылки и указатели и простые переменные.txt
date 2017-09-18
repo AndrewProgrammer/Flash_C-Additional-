@@ -1,0 +1,41 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+void SwapByValue(int a, int b)
+{
+	int tem = a;
+	a = b;
+	b = tem;
+}
+void SwapByPointer(int *a, int *b)
+{
+	if (a == 0 || b == 0)
+	{
+		return;
+	}
+	int tem = *a;
+	*a = *b;
+	*b = tem;
+}
+void SwapByLink(int &a, int &b)
+{
+	int tem = a;
+	a = b; 
+	b = tem;
+}
+void main()
+{
+	int x = 10, y = 20;
+	cout << x << " " << y << endl;
+	cout << "Value: \n";
+	SwapByValue(x, y);
+	cout << x << " " << y << endl;
+	cout << "Pointer: \n";
+	SwapByPointer(&x,&y);
+	cout << x << " " << y << endl;
+	cout << "Link: \n";
+	SwapByLink(x, y);
+	cout << x << " " << y << endl;
+	system("pause");
+
+}

@@ -1,0 +1,65 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+using namespace std;
+//Одномерные статические массивы
+void main()
+{
+	const int width=10, height=1;
+	srand((int)time(0));
+	int a[width]={0},x=0, y=0,c;
+	do{
+		system("cls");
+		for(int i=0; i<=height*2; ++i)
+		{
+			for(int j=0; j<=width*2; ++j)
+			{
+				if(x*2+1==j&&(i==y*2||i==y*2+2))
+					cout<<char(0xcd);
+				else if(y*2+1==i&&(j==x*2||j==x*2+2))
+					cout<<char(0xba);
+				else if(i==0&&j==0)
+					cout<<char(0xda);
+				else if(i==0&&j==width*2)
+					cout<<char(0xbf);
+				else if(j==0&&i==height*2)
+					cout<<char(0xc0);
+				else if(i==height*2&&j==width*2)
+					cout<<char(0xd9);
+				else if(i==0&&j%2==0)
+					cout<<char(0xc2);
+				else if(i==height*2&&j%2==0)
+					cout<<char(0xc1);
+				else if(j==0&&i%2==0)
+					cout<<char(0xc3);
+				else if(j==width*2&&i%2==0)
+					cout<<char(0xb4);
+				else if(i%2==0&&j%2==0)
+					cout<<char(0xc5);
+				else if(i%2==0)
+					cout<<char(0xc4);
+				else if(j%2==0)
+					cout<<char(0xb3);
+				else if(a[j/2]>0)
+					cout<<a[j/2]%10;
+				else cout<<' ';
+			}
+			cout<<endl;
+		}
+		c=_getch();
+		if(c==0||c==224)
+			c=_getch();
+		switch(c)
+		{
+		case 75: --x; if(x==-1) x=width-1; break;
+		case 77: ++x; if(x==width) x=0; break;
+		case 13: ++a[x]; break;
+		}
+	}while(1);
+
+	
+
+	
+}
+

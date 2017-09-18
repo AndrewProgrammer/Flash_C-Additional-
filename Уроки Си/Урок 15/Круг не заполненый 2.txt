@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	int r, a, b;
+	cin >> r;
+	a = b = r + 2;
+	for (int y = -r-5; y < r + 5; y++)
+	{
+		for (int x = -r-5; x < r  + 5; x++)
+		{
+			if (x*x + y*y <= r*r)
+				cout << '*';
+			else
+				cout << ' ';
+		}
+		cout << endl;
+	}	
+}

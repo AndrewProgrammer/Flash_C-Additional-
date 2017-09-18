@@ -1,0 +1,37 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	srand(time(0));
+	rand();
+	const int size = 15;
+	int b[size];
+	for (int k = 0; k < size; k++)
+	{
+		b[k] = rand() % 101;
+	}
+	cout << "Массив с рандомными числами:\n";
+	for (int j = 0; j < size; j++)
+	{
+		cout << b[j] << ' ';
+	}
+	cout << endl;
+	for (int i = size; i > 0; i--)
+	{
+		for (int j = 0; j < i - 1; j++)
+		{
+			if (b[j] > b[j + 1])
+			{
+				swap(b[j], b[j + 1]);
+			}
+		}
+	}
+	cout << "Отсортированый массив методом Пузырька:\n";
+	for (int k = 0; k < size; k++)
+	{
+		cout << b[k] << ' ';
+	}
+	cout << endl;
+}

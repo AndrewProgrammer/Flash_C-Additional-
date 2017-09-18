@@ -1,0 +1,76 @@
+#include <Windows.h>
+#include <iostream>
+#include <ctime>
+#include <conio.h>
+using namespace std;
+//Многомерные статические массивы
+
+void main()
+{
+	int a[5][5]={0},c, temp;
+	for(int i=0; i<5; ++i)
+	{
+		for(int j=0; j<5; ++j)
+		{
+			a[i][j]=rand()%10;
+		}
+		cout<<endl;
+	}
+	do{
+		system("cls");
+		for(int i=0; i<5; ++i)
+		{
+			for(int j=0; j<5; ++j)
+			{
+			
+				cout<<a[i][j]<<'\t';
+			}
+			cout<<endl;
+		}
+		c=_getch();
+		if(c==224||c==0)
+			c=_getch();
+		switch(c)
+		{
+		case 75:
+			for(int i=0; i<5; ++i)
+			{
+				temp=a[i][0];
+				for(int j=0; j<4; ++j)
+					a[i][j]=a[i][j+1];
+				a[i][4]=temp;
+			}
+			break;
+		case 77:
+			for(int i=0; i<5; ++i)
+			{
+				temp=a[i][4];
+				for(int j=4; j>0; --j)
+					a[i][j]=a[i][j-1];
+				a[i][0]=temp;
+			}
+			break;
+		case 72:
+			for(int j=0; j<5; ++j)
+			{
+				temp=a[0][j];
+				for(int i=0; i<4; ++i)
+					a[i][j]=a[i+1][j];
+				a[4][j]=temp;
+			}
+			break;
+		case 80:
+			for(int j=0; j<5; ++j)
+			{
+				temp=a[4][j];
+				for(int i=4; i>0; --i)
+					a[i][j]=a[i-1][j];
+				a[0][j]=temp;
+			}
+			break;
+		}
+	}while(1);
+
+	
+}
+	

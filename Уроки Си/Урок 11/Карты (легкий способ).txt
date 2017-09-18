@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int k;
+	cout << "Enter K";
+	cin >> k;
+	int face;
+	face = k / 4 + 6;
+	switch (face)
+	{
+	case 11 :
+		cout << "A";
+		break;
+	case 12 :
+		cout << "G";
+		break;
+	case 13 :
+		cout << "D";
+		break;
+	case 14 :
+		cout << "K";
+		break;
+	case 15 :
+		cout << "T";
+		break;
+	default :
+		cout << face;
+	}
+	cout << char(k % 4 + 3);
+}

@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	enum Color { Red,Green,Blue};
+	Color someColor = Blue;
+	switch (someColor)
+	{
+	case Red:
+		cout << "Color is Red!\n";
+		break;
+	case Green :
+		cout << "Coolor is Green!\n";
+		break;
+	case Blue :
+		cout << "Color is Blue !\n";
+		break;
+	default :
+		cout << "There is no such color";
+		break;
+	}
+
+}

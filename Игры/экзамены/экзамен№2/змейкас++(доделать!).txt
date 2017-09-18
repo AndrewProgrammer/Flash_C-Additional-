@@ -1,0 +1,640 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream> //организация ввода-вывода
+#include <stdlib.h> //объявляет функции общего назначения
+#include <time.h> //объявляет типы и функции, связанные с датой и временем
+#include <conio.h>//консольный ввод-вывод
+#include <windows.h>//окрашивание консоли, установка координат
+using namespace std;
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);//возвращает дескриптор (идентификатор) окна
+//задаем размеры игрового поля
+const int width = 60, height = 24;//размеры поля, по которому бегает змейка
+const int _left = 0;
+const int up = 0;
+int level = 1;//текущий уровень игры
+int snake_length = 1;//длина змеи
+int apples_count = 2;//количество яблок на поле
+int spid_count = 0;
+int health_count = 0;
+int speed;//скорость движения змеи
+int snake_head_color = 10;
+int snake_head_body = 11;
+bool flag = 0;
+struct Point
+{
+	COORD c;//структура координат положения символа в консоли
+	char symbol;//собственно сам символ
+};
+COORD *snake;// Координаты змеи
+COORD apple;// Координаты яблока
+COORD *diz;// Координаты дизориентаторов
+COORD *superSpeed;// Координаты суперскоростей
+COORD life;// Координаты жизни
+
+COORD rezultat = { 65, 22 };//устанавливаем координаты положения результата в консоли
+COORD infa = { 64, 5 };//устанавливаем координаты положения доп. информации в консоли
+
+
+int sum = 0;//счет игрока
+void SetCur(int X, int Y)
+{
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD pos;
+	pos.X = X;
+	pos.Y = Y;
+	SetConsoleCursorPosition(h, pos);
+}
+void setColor(int text, int background)
+{
+	int ConsoleColor = text + background * 16;
+	SetConsoleTextAttribute(h, ConsoleColor);
+}
+void printfield_and_settings()
+{
+	SetConsoleTextAttribute(h, 10); // стандартный серый цвет
+	rezultat.X = 64; // координаты нужно возвращать на место - они уезжают, если их увеличивать
+	rezultat.Y = 14;
+	infa.X = 64;
+	infa.Y = 2;
+	system("cls");//очищаем экран
+	for (int y = 0; y < height; y++)//стандартный двойной цикл на отрисовку рамки
+	{
+		for (int x = 0; x < width; x++)
+		{
+			char s;
+			if (x == 0 && y == 0)//в верхнем левом углу поля - символ соответствующего угла
+				s = 218;
+			else if (x == 0 && y == height - 1)//нижний левый угол
+				s = 192;
+			else if (y == 0 && x == width - 1)//верхний правый угол
+				s = 191;
+			else if (y == height - 1 && x == width - 1)//нижний правый угол
+				s = 217;
+			else if (y == 0 || y == height - 1)//верхняя и нижняя граница поля
+				s = 196;
+			else if (x == 0 || x == width - 1)//левая и правая граница поля
+				s = 179;
+			else s = ' ';//во всех остальных случаях должен быть просто пробел (означает пустую область поля)
+			putchar(s);//выводим символ
+		}
+		cout << endl;
+	}
+	setlocale(0, ""); // стандартная кодировка
+	SetConsoleCursorPosition(h, rezultat);//устанавливаем курсор в положение результата
+	setlocale(0, "ru"); // смена кодировки
+	SetConsoleTextAttribute(h, 14); // тёмно синий цвет
+	cout << "Скушано яблок: ";
+	SetConsoleTextAttribute(h, 12); // ярко синий цвет
+	cout << sum;//выводим на экран результат игрока
+	//setlocale(0,"С"); // смена кодировки на стандартную
+	SetConsoleCursorPosition(h, infa);//устанавливаем курсор в положение вывода информации об игровых клавишах
+	int color1 = 14; // первый тёмный оттенок
+	int color2 = 11; // второй светлый оттенок
+	SetConsoleTextAttribute(h, color1); // тёмно синий цвет
+	cout << "Движение:";//выводим на экран
+	infa.Y += 2;//изменяем координату положения информации
+	SetConsoleCursorPosition(h, infa);//опускаемся на строку ниже
+	//выводим на экран подсказки об игровых клавишах
+	SetConsoleTextAttribute(h, color2);
+	cout << "  вверх (W) = " << (char)94;
+	infa.Y++;
+	SetConsoleCursorPosition(h, infa);
+	cout << (char)60 << " = влево(A)  \\/  вправао (D) = " << (char)62; //выводим стрелки
+	infa.Y++;
+	SetConsoleCursorPosition(h, infa);
+	cout << "  вниз(S) =   " << (char)118;
+	infa.Y += 2;
+	SetConsoleCursorPosition(h, infa);
+	SetConsoleTextAttribute(h, color1);
+	cout << "Пауза - ";
+	SetConsoleTextAttribute(h, color2);
+	cout << "Пробел";
+	infa.Y += 2;
+	SetConsoleCursorPosition(h, infa);
+	SetConsoleTextAttribute(h, color1);
+	cout << "Выход - ";
+	SetConsoleTextAttribute(h, color2);
+	cout << "Escape";
+	infa.Y -= 2;
+	SetConsoleCursorPosition(h, infa);
+	SetConsoleTextAttribute(h, color1);
+	cout << "Скорость - ";
+	SetConsoleTextAttribute(h, color2);
+	cout << "Enter";
+	infa.Y += 2;
+	COORD health_of_snake;
+	health_of_snake.X = 64;
+	health_of_snake.Y = 15;
+	SetConsoleCursorPosition(h, health_of_snake);
+	SetConsoleTextAttribute(h, 12);
+	cout << "Health snake: " << health_count;
+}
+void print_apples_and_snake()
+{
+	int x, y;
+	snake_length = 2;//начальная длина змеи равна 2ум
+	snake = new Point[snake_length];	//создаем массив размерностью длины змеи
+	snake[0].c.X = 4;//задаем координату х начального положения головы змеи
+	snake[0].c.Y = 5;//координата у
+	snake[0].symbol = (char)64; //задаем символ головы змеи
+	snake[1].c.X = 4;//задаем координаты положения хвоста
+	snake[1].c.Y = 4;
+	snake[1].symbol = '*';//задаем символ хвоста змеи 
+
+	apples_count = level * 20; // +20 яблок на каждом уровне
+	speed = 130 - level * 20;
+	if (speed<15) speed = 15; // чтобы можно было играть
+	apple = new Point[apples_count];
+	int n = 0; //счетчик размещенных на поле яблок
+	while (n < apples_count)//пока не размещены все яблоки
+	{
+		{
+			x = rand() % (width -2) + 1;//расчитываем случайные координаты в пределах нашиего поля
+			y = rand() % (height - 2) + 1;// чтоб на рамке не размещалось
+			flag = 0;//устанавливаем флаг в ноль
+			for (int i = 0; i < snake_length; i++)
+			{
+				if (snake[i].c.X == x && snake[i].c.Y == y)
+				{
+					flag = 1; //если координата яблока совпала с положением змеи, устанавливаем флаг в 1
+					break;
+				}
+			}
+
+			if (flag == 0)
+			{
+				for (int i = 0; i < n; i++)
+				{
+					if (apple[i].c.X == x&&apple[i].c.Y == y)
+					{
+						flag = 1; //если коодината совпала с уже существующим яблоком, устанавливаем флаг в 1
+						break;
+					}
+				}
+			}
+			if (flag == 0)//если координата все-таки свободна - размещаем яблоко
+			{
+				apple[n].c.X = x;
+				apple[n].c.Y = y;
+				apple[n].symbol = (char)48;
+				n++;
+			}
+		}
+	}
+	for (int i = 0; i<snake_length; i++)//рисуем змею зеленого цвета
+	{
+		if (i == 0)
+			SetConsoleTextAttribute(h, snake_head_color);
+		else
+			SetConsoleTextAttribute(h, snake_head_body);
+		SetConsoleCursorPosition(h, snake[i].c);
+		cout << snake[i].symbol;
+	}
+
+	SetConsoleTextAttribute(h, 12);
+	for (int i = 0; i<apples_count; i++)//рисуем красные яблоки
+	{
+		SetConsoleCursorPosition(h, apple[i].c);//устанавливаем курсор в нужное положение
+		cout << apple[i].symbol;//выводим символ
+	}
+}
+void addDiz(int k)
+{
+	delete[]diz;
+	diz = new COORD[k];
+	for (int i = 0; i < k; ++i)
+	{
+		while (true)
+		{
+			diz[i].X = rand() % widthField + 1;
+			diz[i].Y = rand() % heightfield + 8;
+			if (field[diz[i].Y - 8][diz[i].X - 1] == 0)
+			{
+				SetConsoleCursorPosition(h, diz[i]);
+				setColor(BLUE, BLACK);
+				cout << char(15);
+				setColor(GREEN, BLACK);
+				field[diz[i].Y - 8][diz[i].X - 1] = 4;
+				break;
+			}
+		}
+	}
+}
+bool Move_and_Prof(int x = 1,int y = 0)
+{
+	Point  tail; //структура для хвоста
+	bool food = 0; //съедено ли яблоко
+	bool end = 0;//1, если змея скончалась
+	tail = snake[snake_length - 1];//хвост - последний элемент массива
+	//передвигаем змею 
+	for (int i = snake_length - 1; i>0; i--)
+	{
+		snake[i].c.X = snake[i - 1].c.X;
+		snake[i].c.Y = snake[i - 1].c.Y;
+	}
+	//устанавливаем новое положение головы
+	snake[0].c.X += x;
+	snake[0].c.Y += y;
+	//последний символ хвоста предыдущего положения изменяем на пробел
+	SetConsoleCursorPosition(h, tail.c);
+	cout << ' ';
+	//перебираем все яблоки
+	for (int i = 0; i<apples_count; i++)
+	{
+		//если змея слопала яблоко
+		if (snake[0].c.X == apple[i].c.X&&snake[0].c.Y == apple[i].c.Y)
+		{
+			apple[i] = apple[apples_count - 1];//переставляем значения в массиве
+			apples_count--;//изменяем число яблок
+			food = 1; //устанавливаем флаг, что змея съела яблоко
+			break;
+		}
+	}
+	if (food == 1)
+	{
+		snake_length++;//изменяем длину змеи
+		Point *temp_snake;	//создаем вспомагательный массив для перезаписи	
+		temp_snake = new Point[snake_length];
+		//копируем массив змеи во временную переменную
+		for (int i = 0; i<snake_length - 1; i++)
+			temp_snake[i] = snake[i];
+		//удаляем старый массив змеи и создаем новый, большей длины
+		delete[] snake;
+		snake = new Point[snake_length];
+		//заполняем его данными из временной переменной
+		for (int i = 0; i<snake_length; i++)
+			snake[i] = temp_snake[i];
+		//освобождаем память временной переменной
+		delete[] temp_snake;
+		//сдвигаем символы змеи чтобы добавить новый
+		if (snake[snake_length - 2].c.X>snake[snake_length - 3].c.X&&snake[snake_length - 2].c.Y == snake[snake_length - 3].c.Y)
+		{
+			snake[snake_length - 1].c.X = snake[snake_length - 2].c.X + 1;
+			snake[snake_length - 1].c.Y = snake[snake_length - 2].c.Y;
+		}
+		else if (snake[snake_length - 2].c.X<snake[snake_length - 3].c.X&&snake[snake_length - 2].c.Y == snake[snake_length - 3].c.Y)
+		{
+			snake[snake_length - 1].c.X = snake[snake_length - 2].c.X - 1;
+			snake[snake_length - 1].c.Y = snake[snake_length - 2].c.Y;
+		}
+		else if (snake[snake_length - 2].c.X == snake[snake_length - 3].c.X&&snake[snake_length - 2].c.Y>snake[snake_length - 3].c.Y)
+		{
+			snake[snake_length - 1].c.X = snake[snake_length - 2].c.X;
+			snake[snake_length - 1].c.Y = snake[snake_length - 2].c.Y + 1;
+		}
+
+		else if (snake[snake_length - 2].c.X == snake[snake_length - 3].c.X&&snake[snake_length - 2].c.Y<snake[snake_length - 3].c.Y)
+		{
+			snake[snake_length - 1].c.X = snake[snake_length - 2].c.X;
+			snake[snake_length - 1].c.Y = snake[snake_length - 2].c.Y - 1;
+		}
+		//добавляем символ к змее
+		snake[snake_length - 1].symbol = '*';
+		//прорисовываем змею в консоли
+		for (int i = 0; i<snake_length; i++)
+		{
+			SetConsoleCursorPosition(h, snake[i].c);
+			if (i == 0)
+				SetConsoleTextAttribute(h, snake_head_color);
+			else
+				SetConsoleTextAttribute(h, snake_head_body);
+			cout << snake[i].symbol;
+
+		}
+		//увеличиваем счет
+		sum++;
+		//выводим новый результат на экран
+		SetConsoleCursorPosition(h, rezultat);
+		setlocale(0, "");
+		SetConsoleTextAttribute(h, 14);
+		cout << "Скушано яблок: ";
+		SetConsoleTextAttribute(h, 12);
+		cout << sum;
+		return 0; //передаем успешный результат
+	}
+	//если тело змеи замкнулось
+	for (int i = 1; i<snake_length - 1; i++)
+	{
+		if (snake[0].c.X == snake[i].c.X&&snake[0].c.Y == snake[i].c.Y)
+			end = 1;
+	}
+	//мы проиграли
+	if (end == 1)
+	{
+		return 1;
+	}
+
+	//если змея вышла за поле
+	if (snake[0].c.X == _left || snake[0].c.X == width - 1 || snake[0].c.Y == up || snake[0].c.Y == height - 1)
+	{
+		return 1;//передаем результат о проигрыше
+	}
+	//если мы просто передвигались по полю, изменяем положение змеи и перерисовываем ее
+	for (int i = 0; i<snake_length; i++)
+	{
+		SetConsoleCursorPosition(h, snake[i].c);
+		if (i == 0)
+			SetConsoleTextAttribute(h, snake_head_color);
+		else
+			SetConsoleTextAttribute(h, snake_head_body);
+		cout << snake[i].symbol;
+
+	}
+	SetConsoleCursorPosition(h, tail.c);
+	cout << ' ';
+	return 0;
+}
+void snakedir()
+{
+	int x = 1, y = 0;
+	while (1)
+	{
+		while (_kbhit())//проверяет консоль на ввод нажатие клавиши
+		{
+			int k = _getch();//получаем код нажатой клавиши
+			if (k == 224 || k == 0) k = _getch(); //если это были стрелки или эфки
+			switch (k)//проверяем, какая клавиша нажата
+			{
+			case 72://вниз
+				if (snake[0].c.Y - 1 == snake[1].c.Y) // если змея и так двигалась вниз (или вверх) ничего не делать
+					continue;
+				y = -1; // если нажали вниз после стрелки налево или направо
+				x = 0;
+				break;
+			case 80://вверх
+				if (snake[0].c.Y + 1 == snake[1].c.Y)
+					continue;
+				y = 1;
+				x = 0;
+				break;
+			case 75://влево
+				if (snake[0].c.X - 1 == snake[1].c.X)
+					continue;
+				x = -1;
+				y = 0;
+				break;
+			case 77://вправо
+				if (snake[0].c.X + 1 == snake[1].c.X)
+					continue;
+				x = 1;
+				y = 0;
+				break;
+			case 32://пробел - пауза
+				k = _getch();
+				while (k != 32)
+					k = _getch();
+				break;
+			case 27://выход
+			{
+				//COORD c={0,24}; 
+				//SetConsoleCursorPosition(h,c);
+				system("cls");
+				setlocale(0, "");
+				cout << "Спасибо что поиграли!";
+				_getch();
+				system("taskkill -im cmd.exe");
+				SetConsoleTextAttribute(h, 0);
+			}
+			case 13://изменяем скорость движения
+			{
+				COORD c = { 60, 1 }; // место для сообщения
+				SetConsoleTextAttribute(h, 7); // серый цвет
+				SetConsoleCursorPosition(h, c); // установка курсора
+				setlocale(0, ""); // смена кодировки
+				cout << "Укажи скорость: ";
+				SetConsoleTextAttribute(h, 15); // белый цвет
+				cin >> speed; // скорость в миллисекундах
+				SetConsoleCursorPosition(h, c); // повторная установка курсора в эту точку после указания координат
+				SetConsoleTextAttribute(h, 0); // чёрный цвет
+				cout << "Укажи скорость: 9999"; // затереть всё
+				SetConsoleTextAttribute(h, 10);
+				break;
+			}
+			}
+		}
+		if (Move_and_Prof(x, y) == true)//передаем изменения в положении змеи в процедуру движения, если вернулась 1 - мы проиграли
+		{
+			//устанавливаем координату в нужное положение, выводим сообщение о проигрыше и прерываем программу
+			COORD c = { 50, 25 };
+			SetConsoleCursorPosition(h, c);
+			SetConsoleTextAttribute(h, 12);
+			system("cls");
+			system("echo Gameover!!! ");
+			cout << "PRES ESC!" << endl;
+			break;
+			if (level > 1)
+			{
+				level--;
+			}
+			//break;
+		}
+		Sleep(speed);
+		//если мы успешно собрали все яблоки
+		if (apples_count == 0)
+		{
+			cout << "You Win Congratulation!" << endl;
+			level++;//повышаем уговень
+		}
+		SetConsoleTextAttribute(h, 0);
+	}
+}
+void Newgame()
+{
+	system("cls");
+	SetConsoleTextAttribute(h,15);
+	cout << "Hello my friends!\n";
+	SetConsoleTextAttribute(h, 10);
+	cout << "You Are in GAME\n";
+	SetConsoleTextAttribute(h, 14);
+	cout << "PRESS ANY BUTTON TO START\n";
+	SetConsoleTextAttribute(h, 12);
+	cout << "PRES ESC to menu\n";
+	int	code = 1;
+	while (code != 27)
+	{
+		code = _getch();
+		delete[] snake;
+		delete[] apple;
+		char*str = new char[200];
+		strcpy(str, "title Snake - Level ");
+		char*num = new char[10];
+		_itoa(level, num, 10); // перевод строки в число
+		strcat(str, num);
+		system(str); // показать новый заголовок
+
+		printfield_and_settings();
+		print_apples_and_snake();
+		Move_and_Prof();
+		snakedir();
+		_getch();
+	}
+	//}
+}
+void LoadGame()
+{
+	system("cls");
+	cout << "Press ESC goto menu" << endl;
+	int code = 1;
+	while (code != 27)
+	{
+		code = _getch();
+	}
+}
+void Levels()
+{
+	system("cls");
+	cout << "Press ESC goto menu" << endl;
+	int code = 1;
+	while (code != 27)
+	{
+		code = _getch();
+	}
+}
+void Settings()
+{
+	system("cls");
+	cout << "Press ESC goto menu" << endl;
+	int code = 1;
+	char s1 = 24, s2 = 25, s3 = 26, s4 = 27;
+	cout << "Control keys:\n " << "Up-" << s1 << endl << " Down-" << s2 << endl << " Right-" << s3 << endl << " Left-" << s4 << endl << "You need to collect all apples to win this game";
+	while (code != 27)
+	{
+		code = _getch();
+	}
+}
+void Exit()
+{
+	system("cls");
+	COORD c = { 50, 15 };
+	SetConsoleTextAttribute(h, 14);
+	SetConsoleCursorPosition(h, c);
+	cout << "Thank you for playing\n						  Bye i have a great time!" << endl;
+	system("pause");
+	exit(0);
+}
+int MenuPrc()
+{
+	int step = 2;
+	int X = 50, Y = 16;
+	int PosX = X, PosY = Y;
+	int choose = 1;
+	SetCur(X, Y);
+	cout << ">>>";
+
+	int code = 0;
+	while (code != 13)
+	{
+		code = _getch();
+		switch (code)
+		{
+		case 72:
+			if (PosY != Y)
+			{
+				SetCur(PosX, PosY);
+				cout << "   ";
+				PosY -= step;
+				SetCur(PosX, PosY);
+				cout << ">>>";
+				choose--;
+			}
+			break;
+		case 80:
+			if (PosY != Y + 4 * step)
+			{
+				SetCur(PosX, PosY);
+				cout << "   ";
+				PosY += step;
+				SetCur(PosX, PosY);
+				cout << ">>>";
+				choose++;
+			}
+			break;
+		}
+	}
+	return choose;
+}
+
+void PrintMenuList()
+{
+	SetCur(55, 16);
+	cout << "New game";
+	SetCur(55, 18);
+	cout << "Load game";
+	SetCur(55, 20);
+	cout << " Scores ";
+	SetCur(55, 22);
+	cout << "Settings";
+	SetCur(55, 24);
+	cout << "  Exit  ";
+}
+
+void PrintLogo()
+{
+	system("mode con lines=120 lines=50");
+	cout << R"XXX( 
+           .----------------.  .-----------------. .----------------.  .----------------.  .----------------. 
+          | .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+          | |    _______   | || | ____  _____  | || |      __      | || |  ___  ____   | || |  _________   | |
+          | |   /  ___  |  | || ||_   \|_   _| | || |     /  \     | || | |_  ||_  _|  | || | |_   ___  |  | |
+          | |  |  (__ \_|  | || |  |   \ | |   | || |    / /\ \    | || |   | |_/ /    | || |   | |_  \_|  | |
+          | |   '.___`-.   | || |  | |\ \| |   | || |   / ____ \   | || |   |  __'.    | || |   |  _|  _   | |
+          | |  |`\____) |  | || | _| |_\   |_  | || | _/ /    \ \_ | || |  _| |  \ \_  | || |  _| |___/ |  | |
+          | |  |_______.'  | || ||_____|\____| | || ||____|  |____|| || | |____||____| | || | |_________|  | |
+          | |              | || |              | || |              | || |              | || |              | |
+          | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+           '----------------'  '----------------'  '----------------'  '----------------'  '----------------' 
+)XXX";
+}
+void PrintLogo2()
+{
+	COORD c1 = { 20, 28 };
+	SetConsoleCursorPosition(h, c1);
+	cout << R"XXX(                                                                                                                                                                                                                                                                                           
+                             +-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+-+-+-+
+                             |C|r|e|a|t|e|d| |b|y| |A|n|d|r|e|w| |L|y|k|i|a|n|c|h|i|k|o|v|
+                             +-+-+-+-+-+-+-+ +-+-+ +-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+-+-+-+ )XXX";
+
+}
+void main()
+{
+	srand(time(0));
+	system("mode con lines=120 lines=50");
+	system("title SNAKE");
+	CONSOLE_CURSOR_INFO cursor;//структура с иформацией о консольном курсоре
+	cursor.bVisible = false;//курсор не виден
+	cursor.dwSize = 100;//устанавливаем размер курсора
+	SetConsoleCursorInfo(h, &cursor);//изменяем параметры курсора
+	while (1)
+	{
+		SetConsoleTextAttribute(h, 10);
+		PrintLogo();
+		PrintLogo2();
+		PrintMenuList();
+		void(*FncArr[5])() = { Newgame, LoadGame, Levels, Settings, Exit };
+		unsigned int choose = MenuPrc();
+		choose--;
+		choose %= 5;
+		cout << choose;
+		FncArr[choose]();
+		/*switch (MenuPrc())
+		{
+		case 1:
+		system("cls");
+		GamePrc();
+		break;
+		case 2:
+		system("cls");
+		GamePrc();
+		break;
+		case 3:
+		system("cls");
+		GamePrc();
+		break;
+		case 4:
+		exit(0);
+		break;
+		}*/
+	}
+	Sleep(speed);
+	//если мы успешно собрали все яблоки
+	system("pause");
+}

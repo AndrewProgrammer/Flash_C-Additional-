@@ -1,0 +1,38 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstdio>
+#include <Windows.h>
+#include <io.h>
+using namespace std;
+void RussianMessage(const char *msg)
+{
+	char * temp = new char[strlen(msg) + 1];
+	CharToOemA(msg, temp);
+	cout << temp;
+	//delete[] temp;
+}
+int main()
+{
+	char path[MAX_PATH];
+	RussianMessage("¬ведите путь к файлу");
+	gets_s(path, MAX_PATH);
+	FILE * f = fopen(path, "rb");
+	if (!f)
+	{
+		return EXIT_FAILURE;
+	}
+
+	int f_size = _filelength(_fileno(f));
+	char *buf = new char[f_size];
+	memset(buf, 0, f_size); // (buf+ 3, 0, f_size - sizeof(char)); 
+	fread(buf, sizeof(char),f_size,f);
+	fclose(f);
+	RussianMessage(buf);
+	RussianMessage("¬ведите адрес сохранени€");
+	gets_s(path, MAX_PATH);
+	FILE *f2 = fopen(path, "wb");
+	fwrite(buf, sizeof(char), f_size,f2);
+	fclose(f2);
+	system("pause");
+	return EXIT_SUCCESS;
+}

@@ -1,0 +1,84 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstdio>
+#include <Windows.h>
+#include <io.h>
+using namespace std;
+void RussianMessage(const char *msg)
+{
+	char * temp = new char[strlen(msg) + 1];
+	CharToOemA(msg, temp);
+	cout << temp;
+	//delete[] temp;
+}
+struct User
+{
+	char name[21];
+	char surname[21];
+	int age;
+	double exp;
+};
+void main()
+{
+	setlocale(0, "ru");
+	int stages = 5;
+	double temp = 23.6;
+	bool energy = true;
+	User security;
+	security.age = 58;
+	security.exp = 11.2;
+	strcpy(security.name, "Petr");
+	strcpy(security.surname, "Ivanov");
+	char path[MAX_PATH];
+	cout << "¬ведите путь к файлу:\n";
+	gets_s(path, MAX_PATH);
+	FILE *f = fopen(path, "wb");
+	fwrite(&stages, sizeof(int), 1, f);
+	fwrite(&temp, sizeof(double), 1, f);
+	fwrite(&energy, sizeof(bool), 1, f);
+	fwrite(&security, sizeof(User),1,f);
+	fclose(f);
+	system("pause");
+	int stages2;
+	double temp2;
+	bool energy2;
+	User security2;
+	FILE *f1 = fopen(path, "rb");
+	fread(&stages2, sizeof(int), 1, f1);
+	fread(&temp2, sizeof(double), 1, f1);
+	fread(&energy2, sizeof(bool), 1, f1);
+	fread(&security2, sizeof(User), 1, f1);
+	fclose(f1);
+	cout << "Stg = " << stages2 << endl;
+	cout << "tmp = " << temp2 << endl;
+	cout << "nrg = " << energy2 << endl;
+	cout << "usr::name = " << security2.name << endl;
+	cout << "usr::surname = " << security2.surname << endl;
+	cout << "usr::age = " << security2.age << endl;
+	cout << "usr::exp = " << security2.exp << endl;
+
+
+	system("pause");
+	int stages3;
+	double temp3;
+	bool energy3;
+	User security3;
+	FILE *f3 = fopen(path, "rb");
+	fseek(f3, -(int)sizeof(User), SEEK_END);
+	//fseek(f3, sizeof(int)+sizeof(double) +sizeof(bool), SEEK_SET);
+	fread(&security3, sizeof(User), 1, f3);
+	fseek(f3, sizeof(int), SEEK_SET);
+	fread(&temp3, sizeof(double), 1, f3);
+	fseek(f3, 0, SEEK_CUR);
+	fread(&energy3, sizeof(bool),1, f3);
+	fseek(f3, 0, SEEK_SET);
+	fread(&stages3, sizeof(int), 1, f3);
+	fclose(f3);
+	cout << "usr::name = " << security3.name << endl;
+	cout << "usr::surname = " << security3.surname << endl;
+	cout << "usr::age = " << security3.age << endl;
+	cout << "usr::exp = " << security3.exp << endl;
+	cout << "tmp = " << temp3 << endl;
+	cout << "nrg = " << energy3 << endl;
+
+}

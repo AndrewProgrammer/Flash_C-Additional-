@@ -1,0 +1,22 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	double a, b;
+	cout << "Vedite znachenia a i b\n";
+	cin >> a >> b;
+	cout << "Vedite 1 for + or 2 for *\n";
+	int choice;
+	cin >> choice;
+	if (choice == 1)
+	{
+		int c = a + b;
+		cout << c << endl;
+	}
+	else 
+	{
+		double c = a*b;
+		cout << c << endl;
+	}
+	cout << "Done!\n";
+}

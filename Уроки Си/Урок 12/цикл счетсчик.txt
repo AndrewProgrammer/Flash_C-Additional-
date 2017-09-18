@@ -1,0 +1,13 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int a,i=0;
+	cin >> a;
+	while (i < a)
+	{
+		cout << '*';
+		i++;
+	}
+	cout << endl;
+}

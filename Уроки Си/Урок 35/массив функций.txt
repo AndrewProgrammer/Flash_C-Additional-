@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+void NewGame()
+{
+	cout << "New game" << endl;
+}
+void LoadGame()
+{
+	cout << "Load game" << endl;
+}
+
+void ExitGame()
+{
+	cout << "Exit game" << endl;
+}
+void main()
+{
+	while (1)
+	{
+		void(*FncArr[3])() = { NewGame, LoadGame, ExitGame };
+		cout << "1 - New game" << endl;
+		cout << "2 - Load game" << endl;
+		cout << "3 - Exit game" << endl;
+		unsigned int choose = 0;
+		cin >> choose;
+		choose--;
+		cout << choose;
+		choose %= 3;
+		FncArr[choose]();
+	};
+}

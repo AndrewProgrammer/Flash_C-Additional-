@@ -1,0 +1,12 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	int dnei, let, mecyaz, dni;
+	cout << "Vedite kolichestvo dnei skolko chelovek bil na Marce\n";
+	cin >> dnei;
+	let = dnei / 365;
+	mecyaz = (dnei % 365) / 30;
+	dni = dnei % 30;
+	cout << let << "let\n" << mecyaz << "mec\n" << dni << "dnei\n";
+}

@@ -1,0 +1,9 @@
+#include <iostream>;
+using namespace std;
+void main()
+{
+	int gender;
+	cin >> gender;
+	setlocale(0, "ru");
+	cout << "Уважаем" << (gender == 1 ? "ый" : "ая");
+}

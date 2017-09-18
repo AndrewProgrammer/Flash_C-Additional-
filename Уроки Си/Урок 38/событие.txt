@@ -1,0 +1,129 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+using namespace std;
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+int code = 0;
+COORD c = { 5, 5 };
+int h = 0, m = 0, s = 0, mil = 0;
+int time = 0;
+int k = 0;
+int dy = 0, dx = 0;
+bool is_e = true;
+void direction()
+{
+	if (_kbhit())//проверяем, была ли нажата какая-либо клавиша и запускаем её обработку в случае ИСТИНЫ
+	{
+		int k = _getch();//считываем код клавиши из буфера
+		if (k == 0 || k == 224)//если первый код - вспомогательный, считываем второй код
+			k = _getch();
+		switch (k)//пропускаем код нажатой клавиши внутрь оператора выбора
+		{
+		case 80://если была нажата клавиша вниз
+			dy = 1;
+			dx = 0;
+			SetConsoleCursorPosition(h, c);
+			SetConsoleTextAttribute(h, 12);
+			cout << "*";
+			break;
+		case 72://если вверх
+			dy = 1;
+			dx = 0;
+			SetConsoleCursorPosition(h, c);
+			SetConsoleTextAttribute(h, 12);
+			cout << "*";
+			break;
+		case 75://если влево
+			dx = 1;
+			dy = 0;
+			SetConsoleCursorPosition(h, c);
+			SetConsoleTextAttribute(h, 12);
+			cout << "*";
+			break;
+		case 77://если вправо
+			dx = -1;
+			dy = 0;
+			SetConsoleCursorPosition(h, c);
+			SetConsoleTextAttribute(h, 12);
+			cout << "*";
+			break;
+		case 27://если была нажата клавиша ESC
+			exit(0);
+			break;
+		}
+	}
+}
+int GetSec(int time)
+{
+	int Mask = 63;
+	Mask <<= 11;
+	int res = time&Mask;
+	res >> 11;
+	return res;
+}
+int GetHours(int time)
+{
+	int Mask = 31;
+	int res = time&Mask;
+	return res;
+}
+int GetMinute(int time)
+{
+	int Mask = 63;
+	Mask <<= 5;
+	int res = time&Mask;
+	res >> 5;
+	return res;
+}
+int GetMil(int time)
+{
+	int Mask = 1023;
+	Mask <<= 17;
+	int res = time&Mask;
+	res >> 17;
+	return res;
+}
+int PrintSec(int time)
+{
+	cout << GetSec(time);
+}
+void main()
+{
+	SetConsoleCursorPosition(h, COORD{ 40, 2 });
+	SetConsoleTextAttribute(h, 12);
+	cout << "Enabled";
+	while (true)
+	{
+		if (_kbhit())
+		{
+			code = _getch();
+			if (code == 224 || code == 0)
+			{
+				code = _getch();
+			}
+			SetConsoleCursorPosition(h, COORD{ 40, 2 });
+			cout << "\t\t";
+			SetConsoleCursorPosition(h, COORD{ 40, 2 });
+			if (code == 32)
+			{
+				is_e = !is_e;
+				cout << ((is_e) ? "Enabled" : "Disabled");
+			}
+		}
+		if (is_e)
+		{
+			if (time % 10 == 0)
+			{
+				SetConsoleCursorPosition(h, COORD{ 10, 20 });
+				cout << "\t\t";
+				SetConsoleCursorPosition(h, COORD{ 10, 2 });
+				cout << "Sec = " << time / 20;
+			}
+			time++;
+		}
+		Sleep(50);
+
+	}
+	system("pause");
+}

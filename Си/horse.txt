@@ -1,0 +1,82 @@
+
+#include <iostream>
+
+using namespace std;
+
+
+
+const int size = 8;
+
+int pole[size][size] = { 0 };
+
+void Draw()
+
+{
+
+	for (int i = 0; i < size; ++i)
+
+	{
+
+		for (int j = 0; j < size; ++j)
+
+		{
+
+			cout << pole[i][j];
+
+			if (pole[i][j] < 10)
+
+				cout << "  ";
+
+			else
+
+				cout << ' ';
+
+		}
+
+		cout << endl;
+
+			
+
+	}
+
+}
+
+
+
+bool Hod(int hod, int x, int y)
+
+{
+
+	if (x < 0 || y < 0 || x >= size || y >= size || pole[y][x])
+
+		return false;
+
+	pole[y][x] = ++hod;
+
+	if (hod == size*size || Hod(hod, x + 1, y - 2) || Hod(hod, x + 1, y + 2) ||
+
+		Hod(hod, x - 1, y - 2) || Hod(hod, x - 1, y + 2) ||
+
+		Hod(hod, x + 2, y - 1) || Hod(hod, x + 2, y + 1) ||
+
+		Hod(hod, x - 2, y - 1) || Hod(hod, x - 2, y + 1))
+
+		return true;
+
+	pole[y][x] = 0;
+
+	return false;
+
+}
+
+
+
+void main()
+
+{
+
+	Hod(0, 0, 0);
+
+	Draw();
+
+}

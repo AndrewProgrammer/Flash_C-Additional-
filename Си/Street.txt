@@ -1,0 +1,107 @@
+#include <iostream>;
+#include <conio.h>;
+#include <Windows.h>;
+#include <ctime>;
+using namespace std;
+
+void DelHouse(int **&p, int & floors);
+
+void House(int **& h, int & floors)
+{
+	DelHouse(h, floors);
+	int flats;
+	floors = rand() % 5 + 1;
+	h = new int*[floors];
+	for (int i = 0; i < floors; ++i)
+	{
+		flats = rand() % 4 + 1;
+		h[i] = new int[flats + 1];
+		h[i][0] = flats+1;
+		for (int j = 1; j < h[i][0]; ++j)
+			h[i][j] = rand() % 10;
+	}
+}
+
+void PrintHouse(int ** house, int floors)
+{
+	for (int i = 0; i < floors; ++i)
+	{
+		cout << (i+1) << " floor: ";
+		for (int j = 1; j < house[i][0]; ++j)
+			cout << house[i][j] << ' ';
+		cout << endl;
+	}
+	cout << "_______________________\n";
+}
+
+void DelHouse(int **&p, int & floors)
+{
+	if (!p) return;
+	for (int i = 0; i < floors; ++i)
+	{
+		delete[]p[i];
+	}
+	delete[] p;
+	p = nullptr;
+	floors = 0;
+}
+
+void MakeStreet(int ***& Street, int *& floors, int counter)
+{
+	floors = new int[counter];
+	Street = new int**[counter];
+	for (int i = 0; i < counter; ++i)
+	{
+		Street[i] = nullptr;
+		House(Street[i], floors[i]);
+	}
+}
+
+void PrintStreet(int *** Street, int * floors, int counter)
+{
+	for (int i = 0; i < counter; ++i)
+	{
+		cout << "House #" << i + 1<<endl;
+		PrintHouse(Street[i], floors[i]);
+	}
+}
+
+void DelStreet(int ***& Street, int *& floors, int counter)
+{
+	if (!Street) return;
+	for (int i = 0; i < counter; ++i)
+	{
+		DelHouse(Street[i], floors[i]);
+	}
+	delete[] Street;
+	Street = nullptr;
+	delete[] floors;
+	floors = nullptr;
+}
+
+void AddFlat(int ** house, int floors, int floor)
+{
+	if (floor >= floors) return;
+	int * temp = new int[house[floor][0] + 1];
+	for (int i = 0; i < house[floor][0]; ++i)
+		temp[i] = house[floor][i];
+	++temp[0];
+	temp[house[floor][0]] = rand()%10+10;
+	delete[] house[floor];
+	house[floor] = temp;
+}
+
+
+void main()
+{
+	srand((int)time(0));
+	int *** Street=nullptr, *floors=nullptr, counter=3;
+	MakeStreet(Street, floors, counter);
+	PrintStreet(Street, floors, counter);
+	AddFlat(Street[1], floors[1], 0);
+	PrintStreet(Street, floors, counter);
+	DelStreet(Street, floors, counter);
+
+
+	system("pause");
+}

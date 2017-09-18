@@ -1,0 +1,37 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	const int size = 20;
+	int a[size];
+	int n = 0;
+	srand(time(0));
+	rand();
+	for (int k = 0; k < size; k++)
+	{
+		a[k] = rand() % 101;
+	}
+	cout << "Массив с рандомными числами: \n";
+	for (int j = 0; j < size; j++)
+	{
+		cout << a[j] << ' ';
+	}
+	for (int i = 0; i < size; i++)
+	{
+		int b = 2;
+		bool simple = true;
+		while (b < a[i])
+		{
+			if (a[i] % b == 0)
+			{
+				n++;
+				simple = false;
+				break;
+			}
+			b++;
+		}
+	}
+	cout << "Число которое вы ввели встречается = " << n << " раз в этом массиве и является простым\n";
+}

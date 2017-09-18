@@ -1,0 +1,205 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define WORD_SIZE 50
+#define DESC_SIZE 250
+#include <iostream>
+#include <cstdio>
+#include <conio.h>
+#include <Windows.h>
+using namespace std;
+struct Dictionary
+{
+	char *word = new char[WORD_SIZE];
+	char *description = new char[DESC_SIZE];
+};
+
+void AddElementToDictionary(int &size, Dictionary *& mas, Dictionary value)
+{
+	system("cls");
+	cout << " Add element..." << endl;
+	Dictionary * temp = new Dictionary[size + 1];
+	for (int i = 0; i < size; i++)
+	{
+		temp[i] = mas[i];
+	}
+	temp[size] = value;
+	size++;
+	delete[] mas;
+	mas = temp;
+	cout << "Operation completed" << endl;
+	system("pause");
+}
+void AddElementToDictionary(int &size, Dictionary*&mas)
+{
+	system("cls");
+	Dictionary temp;
+	cout << " Enter word " << endl;
+	cin.getline(temp.word, WORD_SIZE - 1);
+	cout << " Enter description" << endl;
+	cin.getline(temp.description, DESC_SIZE - 1);
+	AddElementToDictionary(size, mas, temp);
+}
+
+void PrintDictionary(int size, Dictionary *mas)
+{
+	system("cls");
+	cout << "\t\tDictionary" << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << mas[i].word << " - " << mas[i].description << endl;
+	}
+	if (!size)
+	{
+		cout << "No items in dictionary" << endl;
+	}
+	cout << endl;
+	system("pause");
+}
+
+void SaveDictionary(int size, Dictionary*mas, char path[])
+{
+	system("cls");
+	FILE * f = fopen(path, "w+");
+	if (!f)
+	{
+		cout << "Error open file" << endl;
+	}
+	else
+	{
+		for (int i = 0; i < size; i++)
+		{
+			char * str = new char[strlen(mas[i].word) + strlen(mas[i].description) + 2];
+			strcpy(str, mas[i].word);
+			strcat(str, "-");
+			strcat(str, mas[i].description);
+			strcat(str, "\n");
+			if (fputs(str, f) < 0)
+			{
+				cout << "Error whriting info" << endl;
+			}
+		}
+		fclose(f);
+	}
+	system("pause");
+}
+
+void SaveElement(Dictionary value, char path[])
+{
+	system("cls");
+	FILE * f = fopen(path, "a+");
+	if (!f)
+	{
+		cout << "Error open file" << endl;
+	}
+	else
+	{
+		char * str = new char[strlen(value.word) + strlen(value.description) + 2];
+		strcpy(str, value.word);
+		strcat(str, "-");
+		strcat(str, value.description);
+		strcat(str, "\n");
+		if (fputs(str, f) < 0)
+		{
+			cout << "Error whriting info" << endl;
+		}
+		fclose(f);
+	}
+	system("pause");
+}
+void LoadDictionary(char path[])
+{
+	system("cls");
+	FILE *f = fopen(path, "r+");
+	if (!f)
+	{
+		cout << "Error reading";
+	}
+	else
+	{
+		int size = 2;
+		char * buffer = new char[size];
+		char * temp_word = new char[WORD_SIZE];
+		strcpy(temp_word, "");
+		char* temp_desc = new char[DESC_SIZE];
+		strcpy(temp_desc, "");
+		bool is_word = true;
+		while (fgets(buffer, size, f))
+		{
+			if (buffer[0] == '-')
+			{
+				is_word = false;
+				continue;
+			}
+			else if (buffer[0] == '\n')
+			{
+				/*Dictionary temp;
+				strcpy(temp.word, temp_word);
+				strcpy(temp.description, temp_desc);
+				AddElementToDictionary()*/
+				cout << temp_word << "   " << temp_desc << endl;
+				strcpy(temp_word, "");
+				strcpy(temp_desc, "");
+				is_word = true;
+				system("pause");
+				continue;
+			}
+			if (is_word)
+			{
+				strcat(temp_word, buffer);
+			}
+			else
+			{
+				strcat(temp_desc, buffer);
+			}
+		};
+	}
+}
+void main()
+{
+	int d_size = 0;
+	Dictionary* dictionary = new Dictionary[d_size];
+	char path[] = "Dictionary.txt";
+
+	/*PrintDictionary(d_size, dictionary);
+	AddElementToDictionary(d_size, dictionary);
+	PrintDictionary(d_size, dictionary);*/
+
+	while (1)
+	{
+		system("cls");
+		cout << "\nDICTIONARY MENU" << endl;
+		cout << "1 - Add new word" << endl;
+		cout << "2 - Print all words" << endl;
+		cout << "3 - Save to file" << endl;
+		cout << "4 - Load to file" << endl;
+		cout << "0 - Exit" << endl;
+		int code = 0;
+		code = _getch();
+		switch (code)
+		{
+		case 48:
+			exit(0);
+			break;
+		case 49:
+			AddElementToDictionary(d_size, dictionary);
+			SaveElement(dictionary[d_size - 1], path);
+			break;
+		case 50:
+			PrintDictionary(d_size, dictionary);
+			break;
+		case 51:
+			SaveDictionary(d_size, dictionary, path);
+			break;
+		case 52:
+			LoadDictionary(path);
+			break;
+		case 27:
+			exit(0);
+			break;
+		default:
+			exit(0);
+			break;
+		}
+	}
+	system("pause");
+
+}

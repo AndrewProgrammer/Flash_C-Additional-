@@ -1,0 +1,11 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int counter=0;
+	while (counter < 7);
+	{
+		counter++;
+		cout << "You seen" << counter << "miracle of the world!\n";
+	}cout << "Now you can start your work!\n";
+}

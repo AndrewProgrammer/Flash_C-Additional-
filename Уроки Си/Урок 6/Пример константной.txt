@@ -1,0 +1,13 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	cout"\n"
+		int Dayln_2000Year = 366
+		int HourlnDay = 24
+		int Hourln_Year2000
+		Hourln_Year2000 = Dayln_2000Year*HourlnDay;
+	cout << "\t\t In 2000 Year"
+		<< Hourln_Year2000;
+	cout << "hours\n";
+}

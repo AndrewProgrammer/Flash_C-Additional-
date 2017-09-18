@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	int a, b;
+	char choice;
+	cout << "Введите 1 Если хотите перевести сантиметры в дюймы или 2 Если хотите перевести дюймы в сантиметры!\n";
+	cin >> choice;
+	switch (choice)
+	{
+	case '1':
+		cout << "Vedite a v cantimetrax\n";
+		cin >> a;
+		cout << "Vashe a v dymax!\n" << a * 2.54;
+		break;
+	case '2':
+		cout << "Vedite b v dymax\n";
+		cin >> b;
+		cout << "Vashe b v cantimetrax!\n" << b / 2.54;
+		break;
+	default :
+		cout << "Vi veli nevernii cymbol!\n";
+	}
+}

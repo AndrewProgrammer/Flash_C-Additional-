@@ -1,0 +1,103 @@
+#include <Windows.h>
+#include <iostream>
+#include <ctime>
+#include <conio.h>
+using namespace std;
+
+template<typename T>
+void Print(T a[], int size)
+{
+	for(int i=0; i<size; ++i)
+		cout<<a[i]<<' ';
+	cout<<endl;
+}
+
+//Сортировка выбором
+template<typename T>
+void Sort1(T a[], int size)
+{
+	int min=0;
+	for(int i=0; i<size-1; ++i)
+	{
+		min=i;
+		for(int j=i+1;j<size; ++j)
+		{
+			if(a[j]<a[min])
+				min=j;
+			++counter;
+		}
+		swap(a[i], a[min]);
+	}
+}
+
+
+//Сортировка пузырьком
+template<typename T>
+void Sort2(T a[], int size)
+{
+	for(int i=0; i<size; ++i)
+	{
+		for(int j=0;j<size-i-1; ++j)
+			if(a[j+1]<a[j])
+			{
+				++counter;
+				swap(a[j], a[j+1]);
+			}
+	}
+}
+
+//Сортировка вставками
+template<typename T>
+void Sort3(T a[], int size)
+{
+	T temp;
+	int j;
+	for(int i=1; i<size; ++i)
+	{
+		temp=a[i];
+		j=i-1;
+		while(j>=0&&a[j]>temp)
+		{
+			a[j+1]=a[j];
+			++counter;
+			--j;
+		}
+		a[j+1]=temp;		
+	}
+}
+
+int counter=0;
+
+//Быстрая сортировка
+template<typename T>
+void Sort4(T a[], int begin, int end) {
+	
+	long i = begin, j = end; 		
+	T temp, p;
+	p = a[(begin+end)/2];
+	do{
+		while ( a[i] < p ) i++;
+		while ( a[j] > p ) j--;
+		if (i <= j){
+      		swap(a[i],a[j]);
+			++counter;
+      		i++;
+			j--;
+		}
+	}while ( i<=j );
+	if(begin<j)
+		Sort4(a, begin, j);
+	if(i<end)
+		Sort4(a, i, end);
+}
+
+
+void main()
+{
+	int a[10]={2,1,5,4,7,3,8,9,4,0};
+	Print(a,10);
+	Sort1(a,10);
+	//Sort4(a,0,9);
+	Print(a,10);
+	cout<<counter;
+}

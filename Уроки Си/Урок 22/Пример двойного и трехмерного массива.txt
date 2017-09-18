@@ -1,0 +1,40 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	srand(time(0));
+	int b[3][5] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+	for (int y = 0; y < 3; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			cout.width(5);
+			cout << b[y][x];
+		}
+		cout << endl;
+	}
+	cout << endl;
+	for (int i = 0; i < 15; i++)
+	{
+		cout << b[0][i] << ' ';
+	}
+	cout << endl;
+	int a[3][2][3] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+	cout << endl;
+	cout << "--------------------\n";
+	for (int z = 0; z < 3; z++)
+	{
+		for (int y = 0; y < 2; y++)
+		{
+			for (int x = 0; x < 3; x++)
+			{
+				cout.width(3);
+				cout << a[z][y][x];
+			}
+			cout << endl;
+		}
+		cout << "--------------------\n";
+	}
+}

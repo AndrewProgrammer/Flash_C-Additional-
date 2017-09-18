@@ -1,0 +1,24 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+void PrintArray(int *mas,int size)
+{
+	for (int i = 0; i < size; i++,mas++)
+	{
+		cout << *mas << endl;
+	}
+}
+void FieldArray(int *mas, int size)
+{
+	for (int i = 0; i < size; i++,mas++)
+	{
+		*mas = rand() % 10 + 1;
+	}
+}
+void main()
+{
+	int mas[10];
+	 FieldArray(mas,10);
+	 PrintArray(mas, 10);
+	system("pause");
+}

@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int h, m, c;
+	cout << "Enter hours\n";
+	cin >> h;
+	cout << "Enter min\n";
+	cin >> m;
+	cout <<"Enter cek\n";
+	cin >> c;
+	if (++c == 60)
+	{
+		m++;
+		c = 0;
+	}
+	if (m == 60)
+	{
+		h++;
+		m = 0;
+	}
+	if(h == 24)
+	{
+		h = 0;
+	}
+	else cout << "Error!\n";
+	cout << h << "Your hours\n" << m << "Your minutes\n" << c << "Your seconds\n" << endl;
+}

@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+	int width,height;
+	cout << "Enter hight and width\n";
+	cin >> height >> width;
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			if (x == 0 && y == 0)
+				cout << char(201);
+			else if (y == 0 && x == width - 1)
+				cout << char(187);
+			else if (x == 0 && y == height - 1)
+				cout << char(200);
+			else if (x == width - 1 && y == height - 1)
+				cout << char(188);
+			else if (y == 0 || y == height - 1)
+				cout << char(205);
+			else if (x == 0 || x == width - 1)
+				cout << char(186);
+			else cout << ' ';
+		}
+		cout << endl;
+	}
+}

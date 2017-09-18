@@ -1,0 +1,98 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+
+/*
+Цикл с параметром
+for(инициализация; условие; изменение)
+{
+	действия;
+}
+*/
+
+using namespace std;
+void main()
+{
+	const int width=5,height=5;
+	int x1,y1,x2,y2,x3,y3, counter=0;
+	bool state1=false,state2=false,state3=false, draw=true;
+	srand((int)time(0));
+	x1=rand()%width;
+	y1=rand()%height;
+	do{
+		x2=rand()%width;
+		y2=rand()%height;
+	}while(x2==x1&&y2==y1);
+
+	do{
+		x3=rand()%width;
+		y3=rand()%height;
+	}while(x3==x1&&y3==y1||x3==x2&&y3==y2);
+
+	int x=1,y=1,c;
+	do
+	{
+		system("cls");
+		for(int i=0; i<=height*2; ++i)
+		{
+			for(int j=0; j<=width*2; ++j)
+			{
+				if(x*2+1==j&&(i==y*2||i==y*2+2))
+					cout<<char(0xcd);
+				else if(y*2+1==i&&(j==x*2||j==x*2+2))
+					cout<<char(0xba);
+				else if(i==0&&j==0)
+					cout<<char(0xda);
+				else if(i==0&&j==width*2)
+					cout<<char(0xbf);
+				else if(j==0&&i==height*2)
+					cout<<char(0xc0);
+				else if(i==height*2&&j==width*2)
+					cout<<char(0xd9);
+				else if(i==0&&j%2==0)
+					cout<<char(0xc2);
+				else if(i==height*2&&j%2==0)
+					cout<<char(0xc1);
+				else if(j==0&&i%2==0)
+					cout<<char(0xc3);
+				else if(j==width*2&&i%2==0)
+					cout<<char(0xb4);
+				else if(i%2==0&&j%2==0)
+					cout<<char(0xc5);
+				else if(i%2==0)
+					cout<<char(0xc4);
+				else if(j%2==0)
+					cout<<char(0xb3);
+				else if(i/2==y1&&j/2==x1&&state1||i/2==y2&&j/2==x2&&state2||i/2==y3&&j/2==x3&&state3)
+					cout<<char(5);
+				else cout<<' ';
+
+			}
+			cout<<endl;
+		}
+		if(state1&&state2&&state3)
+			break;
+		c=_getch();
+		if(c==224||c==0)
+			c=_getch();
+		switch(c)
+		{
+		case 72: --y; break;
+		case 80: ++y; break;
+		case 75: --x; break;
+		case 77: ++x; break;
+		case 13:
+			++counter;
+			if(x==x1&&y==y1)
+				state1=true;
+			if(x==x2&&y==y2)
+				state2=true;
+			if(x==x3&&y==y3)
+				state3=true;
+			break;
+		}
+	}while(draw);
+	cout<<"Counter = "<<counter;
+
+}

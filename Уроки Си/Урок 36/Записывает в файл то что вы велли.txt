@@ -1,0 +1,28 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <cstdio>
+#include <Windows.h>
+using namespace std;
+
+void main()
+{
+	char* text[]{"Hello how are you? "};
+	FILE *f = fopen("1.txt", "w+");
+	if (!f)
+	{
+		cout << "Error!" << endl;
+		system("pause");
+		exit(0);
+	}
+	int size = sizeof(text) / sizeof(char*);
+	for (int i = 0; i < size; i++)
+	{
+		if (fputs(text[i], f) < 0)
+		{
+			cout << "Error whriting!" << endl;
+			system("pause");
+			fclose(f);
+		}
+	}
+	fclose(f);
+}

@@ -1,0 +1,35 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+double Calc(double a, double b, double(*oper)(double, double))
+{
+	return (*oper)(a, b);
+}
+double sum(double a,double b)
+{
+	return a + b;
+}
+double sub(double a,double b)
+{
+	return a - b;
+}
+double mul(double a, double b)
+{
+	return a * b;
+}
+double del(double a, double b)
+{
+	return a / b;
+}
+void main()
+{
+	setlocale(0, "ru");
+	int a, b;
+	cout << "Enter 2 digits" << endl;
+	cin >> a;
+	cin >> b;
+	cout << "Sum = " <<Calc(a, b, sum) << endl;
+	cout << "Sub = " << Calc(a, b, sub) << endl;
+	cout << "Mul = " << Calc(a, b, mul) << endl;
+	cout << "Del = " << Calc(a, b, del) << endl;
+}

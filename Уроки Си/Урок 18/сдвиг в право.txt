@@ -1,0 +1,36 @@
+#include<iostream>
+#include <time.h>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	srand(time(0));
+	const int size = 10;
+	int a[size];
+	for (int i = 0; i < size; i++)
+	{
+		a[i] = rand() % 101;
+	}
+	cout << "Массив с рандомными числами: \n";
+	for (int o = 0; o < size;o++)
+	{
+		cout << a[o] << " ";
+	}
+	cout << endl;
+	int shift;
+	cout << "Введите число сдвига\n";
+	cin >> shift;
+	for (int k = 0; k < shift; k++)
+	{
+		int temp = a[size-1];
+		for (int p = size-1; p >0; p--)
+		{
+			a[p] = a[p - 1];
+		}
+		a[0] = temp;
+	}
+	cout << "Массив уже с сдвигом: \n";
+	for (int d = 0; d < size; d++)
+		cout << a[d] << " ";
+	cout << endl;
+}

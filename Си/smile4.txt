@@ -1,0 +1,92 @@
+#include <Windows.h>
+#include <iostream>
+#include <conio.h>
+#include <ctime>
+using namespace std;
+void main()
+{
+	int i=0,j=0, x=1,y=1,d1,d2,d3, c, y1,y2, dy1,dy2;
+	const int width=8, height=12;
+	bool draw=true;
+	srand((int)time(0));
+	d1=rand()%(height-4)+2;
+	d2=rand()%(height-4)+2;
+	d3=rand()%(height-4)+2;
+	y1=rand()%(height-4)+2;
+	y2=rand()%(height-4)+2;
+	dy1=rand()%2?1:-1;
+	dy2=rand()%2?1:-1;
+	do{
+		if(x==width-1&&y==height-1)
+			draw=false;
+		do{
+			system("cls");
+			i=0;
+			do{
+				j=0;
+				do{
+					if(i==y1&&j==3||i==y2&&j==5)
+						cout<<char(2);
+					else
+					if(i==y&&j==x)
+						cout<<char(1);
+					else
+					if(i==0||j==0||i==height||j==width||j==2&&i!=d1||j==4&&i!=d2||j==6&&i!=d3)
+						cout<<char(0xDB);
+					else
+						cout<<' ';
+				}while(++j<=width);
+				cout<<endl;
+			}while(++i<=height);
+			if(x==3&&y==y1||x==5&&y==y2)
+				x=y=1;
+			y1+=dy1;
+			y2+=dy2;
+			if(y1==1||y1==height-1)
+				dy1=-dy1;
+			if(y2==1||y2==height-1)
+				dy2=-dy2;
+			Sleep(100);
+		}while(!_kbhit());
+		c=_getch();
+		if(c==224||c==0)
+			c=_getch();
+		switch(c)
+		{
+		case 72:
+			if(x%2&&y>1) --y; 
+			break;
+		case 80:
+			if(x%2&&y<height-1) ++y; 
+			break;
+		case 77:
+			if(x%2==0||x==1&&y==d1||x==3&&y==d2||x==5&&y==d3)
+				++x;
+			if(x==3)
+				if(y-y1>0)
+					dy1=1;
+				else
+					dy1=-1;
+			if(x==5)
+				if(y-y2>0)
+					dy2=1;
+				else
+					dy2=-1;
+			break;
+		case 75:
+			if(x%2==0||x==3&&y==d1||x==5&&y==d2||x==7&&y==d3)
+				--x;
+			if(x==3)
+				if(y-y1>0)
+					dy1=1;
+				else
+					dy1=-1;
+			if(x==5)
+				if(y-y2>0)
+					dy2=1;
+				else
+					dy2=-1;
+			break;
+		}
+	}while(draw);
+}

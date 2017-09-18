@@ -1,0 +1,61 @@
+#include<iostream>
+#include<time.h>
+using namespace std;
+void main()
+{
+	srand(time(0));
+	int min = -100, max = 100;
+	const int size = 5;
+	int a[size][size];
+	int xmax=0, xmin=0,ymax =0, ymin = 0;
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			a[y][x] = rand() % (max - min + 1) + min;
+		}
+	}
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			cout.width(3);
+			cout << a[y][x] << ' ';
+		}
+		cout << endl;
+	}
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			if (a[ymin][xmin] > a[y][x])
+			{
+				xmin = x;
+				ymin = y;
+			}
+			if (a[ymax][xmax] < a[y][x])
+			{
+				xmax = x;
+				ymax = y;
+			}
+		}
+	}
+	cout << a[ymax][xmax] <<"  " << a[ymin][xmin];
+	if (ymin>ymax||ymin ==ymax&&xmax<xmin)
+	{
+		swap(xmin, xmax);
+		swap(ymin, ymax);
+	}
+	int sum = 0;
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			if (ymin<ymax&&(y>ymin&&y<ymax || y==ymin && x>xmin || y==ymax && x<xmax) || ymax==ymin&&y==ymin && x>xmin&& x<xmax)
+			{
+				sum += a[y][x];
+			}
+		}
+	}
+	cout << sum << endl;
+}

@@ -1,0 +1,37 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+void main()
+{
+	setlocale(0, "ru");
+	const int size = 15;
+	int a[size];
+	int max, min;
+	int pos = -1;
+	int c;
+	cout << "Создать диапозон от максимального до минимального\nВведите минимальное число диапозона и максимальное: \n";
+	cin >> min >> max;
+	srand(time(0));
+	rand();
+	for (int k = 0; k < size; k++)
+	{
+		a[k] = rand() % (max - min + 1) + min;
+	}
+	cout << "Массив с рандомными числами: \n";
+	for (int j = 0; j < size; j++)
+	{
+		cout << a[j] << ' ';
+	}
+	cout << endl;
+	cout << "Введите число которое возможно будет находится в массиве: \n";
+	cin >> c;
+	for (int i = 0; i < size; i++)
+	{
+		if (a[i] == c)
+		{
+			pos = i;
+			break;
+		}	
+	}
+	cout << "Число есть в массиве и его позиция = " << pos << endl;
+}
